@@ -1,0 +1,16 @@
+
+body {
+  background-image: url(./assets/gray-concrete-wall.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+#root{
+  /* background-image: linear-gradient(to right , #e8f9cc  ,#c2d4ba); */
+  background-color: aliceblue;
+}
+
+.slick-arrow::before{
+  color:black !important;
+}
+

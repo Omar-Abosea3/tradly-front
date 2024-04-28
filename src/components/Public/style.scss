@@ -1,0 +1,14 @@
+.publicPage{
+    figure{
+        .proImg{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .brandImg{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
