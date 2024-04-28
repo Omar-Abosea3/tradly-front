@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
-export default function StatusPayment() {
+export default function CancelPayment() {
     const [paymentStatus, setpaymentStatus] = useState(null);
     const {ordertoken} = useParams();
 
     const successPayment = async () => {
         try {
-            const { data } = await axios.patch(`${process.env.REACT_APP_APIBASEURL}/order/successorder?token=${ordertoken}`);
+            const { data } = await axios.patch(`${process.env.REACT_APP_APIBASEURL}/order/cancelorder?token=${ordertoken}`);
             console.log(data);
-            if(data.message === 'confirmed'){
+            if(data.message === 'canceled'){
                 setpaymentStatus(true);
             }
         } catch (error) {
@@ -23,7 +23,7 @@ export default function StatusPayment() {
     },[])
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="alert alert-success w-75"> تمت عملية الدفع بنجاح</div>
+                <div className="alert alert-success w-75"> فشلت عملية الدفع</div>
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">

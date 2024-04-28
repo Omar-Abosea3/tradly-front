@@ -25,6 +25,7 @@ import Profile from './components/Profile/Profile';
 import { Online , Offline } from 'react-detect-offline';
 import Cookies from 'js-cookies';
 import StatusPayment from './components/StatusPayment/SuccessPayment';
+import CancelPayment from './components/StatusPayment/CancelPayment';
 
 
 
@@ -107,7 +108,8 @@ export default function App() {
       {path:'forgetpassword',element:<ProtectedRoutes2><ForgetPassword/></ProtectedRoutes2>},
       {path:'forgetpassword/verifycode',element:<ProtectedRoutes2><VerifyUser/></ProtectedRoutes2>},
       {path:'resetpassword',element:<ProtectedRoutes2><ResetPassword/></ProtectedRoutes2>},
-      {path:'payment-status/:ordertoken',element:<StatusPayment/>}, 
+      {path:'payment-success/:ordertoken',element:<StatusPayment/>}, 
+      {path:'payment-cancel/:ordertoken',element:<CancelPayment/>}, 
       
       {path:'*',element:<div className='vh-100 d-flex py-5 my-5 justify-content-center align-items-center text-black'><img className='w-75' src={require('./assets/error 404.jpg')} alt='error'/>  </div>},
     ]}
