@@ -9,6 +9,7 @@ export default function StatusPayment() {
     const successPayment = async () => {
         try {
             const { data } = await axios.patch(`${process.env.REACT_APP_APIBASEURL}/order/successorder?token=${ordertoken}`);
+            console.log(data);
             if(data.message === 'confirmed'){
                 setpaymentStatus(true);
             }else{
