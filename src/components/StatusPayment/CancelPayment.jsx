@@ -23,7 +23,7 @@ export default function CancelPayment() {
     },[])
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="alert alert-success w-75"> فشلت عملية الدفع</div>
+                <div className="alert alert-danger w-75"> فشلت عملية الدفع</div>
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">
