@@ -257,7 +257,6 @@ nav ul li a{
         width:50px;
     }
 }
-
 .SliderLayer{
     color: white;
     h2{
@@ -444,7 +443,8 @@ nav{
 
 
 footer{
-    background-image: linear-gradient(to left, #398378 25% ,  #0b3932  );
+    // background-image: linear-gradient(to left, #398378 25% ,  #0b3932  );
+    background-color: white ;
     .footerUl{
         list-style: none;
         width: fit-content;

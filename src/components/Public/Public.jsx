@@ -2,13 +2,15 @@ import axios from 'axios';
 import React, { useMemo, useState } from 'react';
 import LodingScrean from '../loadingScreen/LodingScrean';
 import './style.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import AddToWishlistBtn from '../Buttons/AddToWishlistBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import { Helmet } from 'react-helmet';
-
+import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
+import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
+import Cookies from 'js-cookies';
 export default function Public() {
     const [allCategories, setallCategories] = useState(null);
     const [allProducts, setallProducts] = useState(null);
@@ -16,6 +18,7 @@ export default function Public() {
     const [favIds, setfavIds] = useState([]);
     const wishlistProducts = useSelector((store) => store.getFavProductsSlice.wishlistProducts);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const settings = {
         dots: false,
         infinite: true,
@@ -126,6 +129,14 @@ export default function Public() {
             console.log(error);
         }
     }
+    async function addingToCart(id){
+        if(!Cookies.getItem('token')){
+            navigate('/login');
+        }else{
+            await addToCartFunction(id);
+            dispatch(getCartItemsData());
+        }
+    } 
 
     const memo = useMemo(()=>{
         if(!allCategories){
@@ -194,7 +205,7 @@ export default function Public() {
                     {allProducts.map((pro, index) => pro.rate >= 4 ? <div id='homeTop' key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3 px-2">
                         <div className="product position-relative overflow-hidden">
                             <Link to={`/product-detailes/${pro._id}`} className='text-decoration-none shadow-lg text-white'>
-                                <figure className='overflow-hidden'><img className='w-100 proImg' src={pro.images[0].secure_url} alt={pro.title} /></figure>
+                                <figure style={{ height: '250px' }} className='overflow-hidden'><img className='w-100 proImg' src={pro.images[0].secure_url} alt={pro.title} /></figure>
                                 <figcaption className='ps-2 py-2'>
                                     <img width={'80px'} className='mb-2' src={pro.brandId?.logo.secure_url} alt={pro.brandId?.name} />
                                     <h2 className='ProTitle'>{pro.title.slice(0, pro.title.indexOf(' ', 10))}</h2>
@@ -205,6 +216,7 @@ export default function Public() {
                                 </figcaption>
                             </Link>
                             {favIds.includes(pro._id)?<AddToWishlistBtn id={pro._id} classes={'bi text-danger bi-heart-fill fs-4 px-2'}/>:<AddToWishlistBtn id={pro._id} classes={'bi bi-heart fs-4 px-2'}/>}
+                            <button onClick={function () { addingToCart(pro._id) }} id={`addBtn${pro._id}`} title='Add To Cart' className='proBtn w-100 rounded-bottom-2'><i className='fa fa-cart-plus'></i></button>
                             {pro.appliedDiscount ? <div className='position-absolute sale me-3 text-center' >Sale</div> : ''}
                         </div>
                     </div> : '')}

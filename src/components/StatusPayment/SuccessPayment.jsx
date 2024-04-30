@@ -15,6 +15,11 @@ export default function StatusPayment() {
             }
         } catch (error) {
             console.log(error);
+            if(error.response.data.message === "invalid orderId"){
+                setpaymentStatus(false);
+            }else{
+                setpaymentStatus(null);
+            }
         }
     }
 
@@ -24,6 +29,10 @@ export default function StatusPayment() {
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
                 <div className="alert alert-success w-75"> تمت عملية الدفع بنجاح</div>
+        </div>}
+
+        {paymentStatus === false && <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="alert alert-warning w-75"> تم تأكيد هذا الطلب من قبل</div>
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">

@@ -1,14 +1,12 @@
 
 body {
-  background-image: url(./assets/gray-concrete-wall.jpg);
+  background-image: url(./assets/gray-concrete-wall.jpg) !important;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center; 
   background-attachment: fixed;
 }
-#root{
-  /* background-image: linear-gradient(to right , #e8f9cc  ,#c2d4ba); */
-  background-color: aliceblue;
-}
+
 
 .slick-arrow::before{
   color:black !important;

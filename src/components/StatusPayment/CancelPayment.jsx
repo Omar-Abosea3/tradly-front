@@ -15,6 +15,11 @@ export default function CancelPayment() {
             }
         } catch (error) {
             console.log(error);
+            if(error.response.data.message === "invalid orderId"){
+                setpaymentStatus(false);
+            }else{
+                setpaymentStatus(null);
+            }
         }
     }
 
@@ -24,6 +29,10 @@ export default function CancelPayment() {
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
                 <div className="alert alert-danger w-75"> فشلت عملية الدفع</div>
+        </div>}
+
+        {paymentStatus === false && <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="alert alert-warning w-75"> تم الغاء هذا الطلب من قبل</div>
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">

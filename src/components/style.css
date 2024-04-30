@@ -430,7 +430,7 @@ nav {
   }
 }
 footer {
-  background-image: linear-gradient(to left, #398378 25%, #0b3932);
+  background-color: white;
 }
 footer .footerUl {
   list-style: none;
