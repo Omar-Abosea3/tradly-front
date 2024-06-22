@@ -1,0 +1,75 @@
+.searchInputContainer {
+  background-color: #FFFFFF;
+  border: 1px solid #398378 !important;
+}
+.searchInputContainer input {
+  width: 80%;
+}
+.searchInputContainer input:focus {
+  outline: 0px;
+  border: 0px;
+}
+.searchInputContainer input::-moz-placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #667085;
+}
+.searchInputContainer input::placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #667085;
+}
+.searchInputContainer .serchIconContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #398378;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.searchInputContainer .serchIconContainer:hover {
+  background-color: #56b6a7;
+  color: white;
+}
+
+/* src/Dropdown.css */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown .dropdown-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #398378;
+  font-size: 24px;
+}
+.dropdown .dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 90%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown .dropdown-menu button {
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  display: block;
+  transition: all 0.3s;
+}
+.dropdown .dropdown-menu button:hover {
+  background-color: #f1f1f1;
+}/*# sourceMappingURL=style.css.map */

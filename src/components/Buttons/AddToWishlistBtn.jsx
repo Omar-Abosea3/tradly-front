@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "../../../node_modules/js-cookies/src/cookies";
 
 export default function AddToWishlistBtn(props) {
-    const {id , classes ,removeKey } = props;
+    const {id , classes ,removeKey , page} = props;
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const wishlistProducts = useSelector((store)=>store.getFavProductsSlice.wishlistProducts);
@@ -33,8 +33,8 @@ export default function AddToWishlistBtn(props) {
 
     async function removeFromWishlist(productId){
         $(`#addWishList${productId}`).removeClass('text-danger bi-heart-fill').addClass('bi-heart');
-        if(removeKey){
-            $(`#wishPro${productId}`).slideUp(2000);
+        if(page === 'wishlist'){
+            $(`#${productId}`).slideUp(2000);
             $('#imPortantLayer').removeClass('d-none');
         }
         try {
@@ -43,7 +43,7 @@ export default function AddToWishlistBtn(props) {
             });
            console.log(data);
             dispatch(getFavProductsData());
-            if(removeKey){
+            if(page === 'wishlist'){
                 setTimeout(() => {
                     $('#imPortantLayer').addClass('d-none');
                 }, 1500);
@@ -55,8 +55,8 @@ export default function AddToWishlistBtn(props) {
         } catch (error) {
             $('#imPortantLayer').addClass('d-none');
             $(`#addWishList${productId}`).addClass('text-danger bi-heart-fill').removeClass('bi-heart');
-            if(removeKey){
-                $(`#wishPro${productId}`).slideDown(3000);
+            if(page === 'wishlist'){
+                $(`#${productId}`).slideDown(3000);
             }
             $('.UnAuthMsg').slideDown(500 , function(){
                 setTimeout(() => {

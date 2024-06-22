@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
 
 
-export default function Layout({clearUserData,curUser}) {
+export default function Layout({clearUserData,curUser , changeLanguage , setDirection }) {
+  const [pagePath, setpagePath] = useState(window.location.href);
 
-
+  useEffect(()=>{
+    setpagePath(window.location.href);
+    console.log(pagePath);
+  },[])
   return <>
-        <Navbar curUser={curUser} clearUserData={clearUserData} />
+        {pagePath.includes('login') || pagePath.includes('signup')?'':<Navbar curUser={curUser} clearUserData={clearUserData} changeLanguage={changeLanguage}  setDirection={setDirection} />}
         <div style={{display:'none',zIndex:'9999',bottom:'2%'}} className="emptyCart text-center alert bg-dark start-0 end-0 mx-5 text-white position-fixed"><i className="bi bi-cart-x-fill"></i> Your Cart Is Empty.</div>
         <div style={{display:'none',zIndex:'9999',bottom:'2%'}} className="RemoveMsg mt-0 text-center alert bg-dark text-white position-fixed start-0 end-0 mx-5"><i className="bi bi-cart-dash-fill"></i> Product Removed From Cart Successfully .</div>
         <div style={{display:'none',zIndex:'9999',bottom:'2%'}} className="UnAuthMsg mt-0 text-center alert bg-dark text-white position-fixed start-0 end-0 mx-5"><i className="bi bi-exclamation-triangle"></i> please login first Or Check Network .</div>

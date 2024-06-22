@@ -1,19 +1,21 @@
 import axios from "axios";
 import $ from 'jquery';
-export async function addToCartFunction(id){
+import Cookies from "js-cookies";
+export async function addToCartFunction(id , quantity = 1){
     try {
-        const { data } = await axios.post("https://ecommerce.routemisr.com/api/v1/cart",
+        const { data } = await axios.post(`${process.env.REACT_APP_APIBASEURL}/cart`,
           {
             productId: id,
+            quantity
           },
           {
             headers: {
-              token: localStorage.getItem("tkn1"),
+              bearertoken: Cookies.getItem("token"),
             },
           }
         );
-        if (data.status === "success") {
-            
+        if (data.message === "success") {
+            console.log('success');
             $('.sucMsg').slideDown(500, function () {
                 setTimeout(() => {
                     $('.sucMsg').slideUp(500);

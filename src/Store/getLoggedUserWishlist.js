@@ -15,7 +15,7 @@ export const getFavProductsData=createAsyncThunk('getwishitem/getWishItemsData' 
           }
         );
         console.log(data);
-       if (data.status === "success") {
+       if (data.message === "success") {
         console.log(data);
         if(!data.wishlistProducts.length){
             $('#emptyWishlist').html(`<div class="emptyWishlistMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptyWishlist}' alt="Empty Wishlist" /></div>`).addClass('vh-100'); 
@@ -43,7 +43,7 @@ const getFavProductsSlice = createSlice({
                 $('#emptyWishlist').html(`<div class="emptyWishlistMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptyWishlist}' alt="Empty Wishlist" /></div>`).addClass('vh-100');
             }else{
                 state.wishlistProducts = action.payload.wishlistProducts;
-                state.wishlistItems = action.payload.wishlistProducts.length;
+                state.wishlistItems = action.payload.wishlistProducts?.length;
             }   
         })
         builder.addCase(getFavProductsData.rejected ,function(state){

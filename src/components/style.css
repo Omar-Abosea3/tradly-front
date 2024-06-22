@@ -4,6 +4,7 @@
   border: 0px;
   padding: 5px;
   font-size: 1.2rem;
+  border-radius: 16px;
   transition: all, 0.3s;
   -o-transition: all, 0.3s;
   -moz-transition: all, 0.3s;
@@ -162,9 +163,15 @@
   background-color: #398378;
 }
 
+.slick-dots li button::before {
+  font-size: 12px !important;
+  color: #398378 !important;
+}
+
 .product {
   overflow: hidden;
   background-color: white;
+  border-radius: 24px;
 }
 .product h3, .product h4, .product h6, .product h2 {
   color: black;
@@ -182,8 +189,8 @@
   background-color: #b74829;
   color: white;
   top: 0%;
-  left: 2%;
-  padding: 5px;
+  left: 5%;
+  padding: 8px;
 }
 .product .proImg {
   transition: all, 0.3s;
@@ -194,6 +201,23 @@
 }
 .product:hover .proImg {
   transform: scale(1.1, 1.1);
+}
+.product .orderPtn {
+  background-color: #bde37f;
+  color: #0f6c14;
+  border: 0px;
+  padding: 5px;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  transition: all, 0.3s;
+  -o-transition: all, 0.3s;
+  -moz-transition: all, 0.3s;
+  -ms-transition: all, 0.3s;
+  -webkit-transition: all, 0.3s;
+}
+.product .orderPtn:hover {
+  background-color: rgb(212, 212, 212);
+  color: #30ac9a;
 }
 
 .proBtn2 {
@@ -228,6 +252,101 @@
 }
 .totalPrice span {
   color: #79d45b;
+}
+
+.paginationBtn {
+  background-color: white;
+  color: #398378;
+  border: 0px;
+  padding: 10px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
+.paginationBtn:disabled {
+  background-color: rgba(255, 255, 255, 0.549);
+  color: rgba(58, 131, 120, 0.662745098);
+}
+
+.searchInputContainer {
+  background-color: #FFFFFF;
+  border: 1px solid #398378 !important;
+}
+.searchInputContainer input {
+  width: 80%;
+}
+.searchInputContainer input:focus {
+  outline: 0px;
+  border: 0px;
+}
+.searchInputContainer input::-moz-placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #667085;
+}
+.searchInputContainer input::placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #667085;
+}
+.searchInputContainer .serchIconContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #398378;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.searchInputContainer .serchIconContainer:hover {
+  background-color: #56b6a7;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown .dropdown-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #398378;
+  font-size: 24px;
+}
+.dropdown .dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 90%;
+  left: -200%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown .dropdown-menu button {
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  display: block;
+  transition: all 0.3s;
+}
+.dropdown .dropdown-menu button:hover {
+  background-color: #f1f1f1;
+}
+
+.pageNumber {
+  margin: 0px 10px;
+  color: #398378;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .ProTitle {
@@ -461,7 +580,7 @@ footer .footerInfo h3 {
 .MyIcons2 {
   width: 55px;
   height: 55px;
-  border: 2px solid #276259;
+  border: 2px solid white;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -469,16 +588,19 @@ footer .footerInfo h3 {
   margin-right: 5px;
   margin-top: 10px;
   cursor: pointer;
-  color: #276259;
+  color: #2AB6AB;
   transition: all, 0.3s;
   -o-transition: all, 0.3s;
   -moz-transition: all, 0.3s;
   -ms-transition: all, 0.3s;
   -webkit-transition: all, 0.3s;
 }
+.MyIcons2 a {
+  text-decoration: none;
+  color: unset;
+}
 .MyIcons2:hover {
-  background-color: #276259;
-  color: #ccb889;
+  color: #BDE37F;
 }
 
 ::-webkit-scrollbar {

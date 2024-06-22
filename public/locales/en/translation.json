@@ -1,0 +1,26 @@
+{
+    "public":{
+        "seaProductDetailes":"View more about this product",
+        "allCategories":"All Categories",
+        "seeAll":"See All",
+        "PopularProducts":"Popular Products",
+        "Stores":"Stores",
+        "pastProductPrice":"This Product is on sale and it’s price was ",
+        "newProductPrice":" but after discount became "
+    },
+    "navbar":{
+        "Home":"Home",
+        "FavStores":"Favourite Stores",
+        "Login":"Login",
+        "Logout":"Logout",
+        "signUp":"Sign Up",
+        "Cart":"Cart",
+        "Profile":"Profile",
+        "Wishlist":"Wishlist",
+        "OrdersHistory":"Orders History"
+    },
+    "footer": {
+        "About_Us_Title":"About Us",
+        "About_Us":"At our company, we are dedicated to revolutionizing the online trading experience by developing innovative eCommerce web applications. Our team of experts is committed to making online shopping easier and more accessible for everyone. We leverage cutting-edge AI technologies to enhance user convenience, including features like image-based product searches and text recognition from images to find products. By integrating these advanced tools, we aim to simplify the online trading process, ensuring that our customers enjoy a seamless and efficient shopping experience. Our mission is to continually innovate and provide solutions that make online trading straightforward and intuitive."
+    }
+}

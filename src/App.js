@@ -7,7 +7,7 @@ import Cart from './components/Cart/Cart';
 import Login from './components/login/Login';
 import SignUp from './components/SignUp/SignUp';
 import jwtDecode from 'jwt-decode';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import BrandProducts from './components/Specefic-Products/BrandProducts';
 import ProductDetailes from './components/ProductDetailes/ProductDetailes';
 import Payment from './components/Payment/Payment';
@@ -16,7 +16,6 @@ import $ from 'jquery';
 import Public from './components/Public/Public';
 import WishlistProducts from './components/WishlistProducts/WishlistProducts';
 import CategoryProducts from './components/Specefic-Products/CategoryProducts';
-import SubCategories from './components/SubCategories/SubCategories';
 import SubCategoryProducts from './components/Specefic-Products/SubCategoryProducts';
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import VerifyUser from './components/ForgetPassword/VerifyUser';
@@ -26,13 +25,31 @@ import { Online , Offline } from 'react-detect-offline';
 import Cookies from 'js-cookies';
 import StatusPayment from './components/StatusPayment/SuccessPayment';
 import CancelPayment from './components/StatusPayment/CancelPayment';
+import { useTranslation } from 'react-i18next';
 
 
 
 
 export default function App() {
-
   const [curUser, setcurUser] = useState(null);
+  // const [imageFile, setimageFile] = useState(null);
+  // const [textFile, settextFile] = useState(null);
+  // const [textSearch, settextSearch] = useState(' ');
+  const {i18n} = useTranslation();
+  const setDirection = (direction) => {
+    document.documentElement.dir = direction;
+  };
+  const bodyClasses = i18n.language ;
+  const changeLanguage = (lng = 'en') => {
+    i18n.changeLanguage(lng);
+    if(lng ===  'en'){
+      setDirection('ltr');
+      localStorage.setItem('pageDir' , 'ltr');
+    }else{
+      setDirection('rtl');
+      localStorage.setItem('pageDir' , 'rtl');
+    }
+  };
   function getUserData(){
     const userData = jwtDecode(Cookies.getItem('token'));
     setcurUser(userData);
@@ -45,6 +62,7 @@ export default function App() {
   }
 
   useEffect(function () {
+    changeLanguage();
     if (Cookies.getItem("token") != null && curUser == null) {
       getUserData();
     }
@@ -89,17 +107,16 @@ export default function App() {
 
 
   const router = createHashRouter([
-    {path:'',element:<Layout curUser={curUser} clearUserData={clearUserData} />,children:[
+    {path:'',element:<Layout  changeLanguage={changeLanguage} setDirection={setDirection} curUser={curUser} clearUserData={clearUserData} />,children:[
       {path:'',element:<Public/>},
       {path:'/:id',element:<CategoryProducts/>},
-      {path:'home',element:<Home/>},
+      {path:'home',element:<Home />},
       {path:'brands',element:<Brands/>},
-      {path:'subcategories',element:<SubCategories/>},
       {path:'subcategories/:id',element:<SubCategoryProducts/>},
       {path:'wishlist' , element:<ProtectedRoutes><WishlistProducts/></ProtectedRoutes>},
       {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData}/></ProtectedRoutes>},
       {path:'brands/:id',element:<BrandProducts/>},
-      {path:'product-detailes/:id',element:<ProtectedRoutes><ProductDetailes/></ProtectedRoutes>},
+      {path:'product-detailes/:id',element:<ProductDetailes/>},
       {path:'cart',element:<ProtectedRoutes><Cart/></ProtectedRoutes>},
       {path:'payment',element:<ProtectedRoutes><Payment/></ProtectedRoutes>},
       {path:'allorders',element:<ProtectedRoutes><MyOrders curUser={curUser} /></ProtectedRoutes>},
@@ -117,7 +134,9 @@ export default function App() {
 
   return <>
       <Online>
-        <RouterProvider router={router}/>
+        <div className={bodyClasses}>
+          <RouterProvider router={router} />
+        </div>
       </Online>
 
       <Offline>

@@ -2,23 +2,26 @@ import axios from 'axios';
 import React, { useMemo, useState } from 'react';
 import LodingScrean from '../loadingScreen/LodingScrean';
 import './style.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import AddToWishlistBtn from '../Buttons/AddToWishlistBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import { Helmet } from 'react-helmet';
-import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
-import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
-import Cookies from 'js-cookies';
+import ProductCard from '../ProductCard/ProductCard';
+import BrandCard from '../Brands/BrandCard/BrandCard';
+import { useTranslation } from 'react-i18next';
 export default function Public() {
     const [allCategories, setallCategories] = useState(null);
     const [allProducts, setallProducts] = useState(null);
     const [allBrands, setallBrands] = useState(null);
+    const [favBrand, setfavBrand] = useState(null);
     const [favIds, setfavIds] = useState([]);
     const wishlistProducts = useSelector((store) => store.getFavProductsSlice.wishlistProducts);
+    const myfavBrands = useSelector((state) => state.favBrands.favBrands);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {t} = useTranslation();
+       
+        console.log(localStorage.getItem('pageDir'));
     const settings = {
         dots: false,
         infinite: true,
@@ -27,10 +30,11 @@ export default function Public() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,
-        arrows : true,
+        arrows : false,
         cssEase: 'ease',
         useCSS:true,
         pauseOnHover: true,
+        rtl: localStorage.getItem('pageDir') === 'rtl' ?true:false,
         responsive:[{
  
             breakpoint: 1024,
@@ -47,17 +51,18 @@ export default function Public() {
               infinite: true
             }
        
-          }],
+        }],
     };
     const categorySetting = {
         dots: false,
         infinite: true,
         speed: 2000,
-        slidesToShow: 3,
+        slidesToShow: allCategories?.length<5?3:5,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 4000,
         arrows : true,
+        rtl: localStorage.getItem('pageDir') === 'rtl' ?true:false,
         cssEase: 'ease',
         useCSS:true,
         pauseOnHover: true,
@@ -86,11 +91,44 @@ export default function Public() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
+        fade:localStorage.getItem('pageDir') === 'rtl' ?false:true,
         autoplaySpeed: 4000,
         arrows : false,
+        rtl: localStorage.getItem('pageDir') === 'rtl' ?true:false,
         cssEase: 'ease',
         useCSS:true,
         pauseOnHover: true,
+    };
+    const brandSetting = {
+        dots: false,
+        infinite: true,
+        speed: 2000,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        arrows : false,
+        rtl: localStorage.getItem('pageDir') === 'rtl' ?true:false,
+        cssEase: 'ease',
+        useCSS:true,
+        pauseOnHover: true,
+        responsive:[{
+ 
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              infinite: true
+            }
+       
+          }, {
+       
+            breakpoint: 800,
+            settings: {
+              slidesToShow: 2,
+              infinite: true
+            }
+       
+          }],
     };
     async function getAllCategories(){
         try {
@@ -128,14 +166,6 @@ export default function Public() {
         } catch (error) {
             console.log(error);
         }
-    }
-    async function addingToCart(id){
-        if(!Cookies.getItem('token')){
-            navigate('/login');
-        }else{
-            await addToCartFunction(id);
-            dispatch(getCartItemsData());
-        }
     } 
 
     const memo = useMemo(()=>{
@@ -143,15 +173,23 @@ export default function Public() {
             getAllCategories();
         }
     },[allCategories])
-
-    const memo2 = useMemo(()=>{
+    const memo2 = useMemo(() => {
+        const brandIds=[];
+        if(myfavBrands != null){
+            myfavBrands.map((brand) => brandIds.push(brand._id));
+            setfavBrand(brandIds);
+        }else{
+            setfavBrand(brandIds);
+        }
+    },[myfavBrands])
+    const memo3 = useMemo(()=>{
         const wishProductIds = [];
         if(!wishlistProducts){
             dispatch(getFavProductsData());
             setfavIds(wishProductIds);
         }else{
             wishlistProducts.map(pro => wishProductIds.push(pro.id));
-            if(wishProductIds.length != 0){
+            if(wishProductIds.length !== 0){
                 setfavIds(wishProductIds);
             }
         }
@@ -162,16 +200,16 @@ export default function Public() {
         </Helmet>
       <div className="my-5 publicPage">
           {!allCategories || !allProducts  || !allBrands? <LodingScrean /> : <div className='container-fluied px-3 my-5 py-5'>
-              <div className="row mt-3">
+              <div className="row mt-3 mb-4">
                 <Slider {...settings2}>
-                    {allProducts.map((pro, index) => pro.appliedDiscount !== 0 ? 
+                    {allProducts.map((pro, index) => pro.priceAfterDiscount !== pro.price? 
                         <div key={index} className="product position-relative overflow-hidden">
-                                <figure style={{height:'80vh'}} className='overflow-hidden position-relative'>
+                                <figure style={{height:'80vh'}} className='overflow-hidden position-relative mb-0'>
                                     <img className='w-100 proImg' src={pro.images[0].secure_url} alt={pro.title} />
-                                    <figcaption className='py-2 position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center align-content-center px-5 flex-wrap bg-black bg-opacity-75'>
-                                        <h2 className='ProTitle fs-1 w-100'>This is {pro.title.slice(0, pro.title.indexOf(' ', 10))}</h2>
-                                        <p className='w-100 text-white'>This Product is on sale and it’s price was <span className='text-decoration-line-through text-danger'>{pro.price}</span> but after discount became <span className='text-success'>{pro.priceAfterDiscount}</span></p>
-                                        <div className='w-100'><Link to={`/product-detailes/${pro._id}`} className='text-decoration-none'><button className='btn btn-outline-light' title='detailes'> View more about this product <i className='fa fa-arrow-right'></i></button></Link></div>
+                                    <figcaption className='py-2 position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center align-content-center px-5 flex-wrap bg-black bg-opacity-25'>
+                                        <h2 className='ProTitle fs-1 w-100 text-truncate'>This is {pro.title}</h2>
+                                        <p className='w-100 text-white fs-5'>{t('public.pastProductPrice')}<span className='text-decoration-line-through text-danger'>{pro.price}</span> {t('public.newProductPrice')}<span className='text-warning'>{pro.priceAfterDiscount}</span></p>
+                                        <div className='w-100'><Link to={`/product-detailes/${pro._id}`} className='text-decoration-none'><button className='btn btn-outline-light' title='detailes'> {t('public.seaProductDetailes')} <i className='fa fa-arrow-right'></i></button></Link></div>
                                     </figcaption>
                                 </figure>
                         </div>
@@ -180,13 +218,13 @@ export default function Public() {
               </div>
               
               <div className='row px-3 gx-1 gy-1'>
-                  <h3 className='mb-3 titleFontSize'><i className="bi bi-collection"></i> All Categories</h3>
+                  <h3 className='mb-3 titleFontSize'><i className="bi bi-collection"></i> {t('public.allCategories')}</h3>
                   <Slider {...categorySetting}>
                       {allCategories.map((item) => <div key={item._id} className='col-lg-3 col-md-4 col-6'>
                           <Link to={`/${item._id}`} className='text-decoration-none link-light'>
                               <figure style={{ height: '300px' }} className='position-relative mb-0 overflow-hidden'>
-                                  <img src={item.image.secure_url} alt={item.name} className='w-100' />
-                                  <figcaption className='bg-dark bg-opacity-75 text-light position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center'>
+                                  <img style={{objectFit:'contain'}} src={item.image.secure_url} alt={item.name} className='w-100 h-100' />
+                                  <figcaption className='bg-dark bg-opacity-25 text-light position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center'>
                                       <h3>{item.slug}</h3>
                                   </figcaption>
                               </figure>
@@ -198,43 +236,24 @@ export default function Public() {
 
               <div className="row gx-2 px-5 my-5 gy-2">
                 <div className='text-dark mb-3 d-flex justify-content-between align-items-center'>
-                    <h3 className='titleFontSize'><i className="bi bi-star"></i> Popular Products</h3>
-                    <Link to={'/home'} className='text-decoration-none link-light'><button style={{backgroundColor:'#40C9B4'}} className='btn'>See All <i className='bi bi-arrow-right'></i></button></Link>
+                    <h3 className='titleFontSize'><i className="bi bi-star"></i> {t('public.PopularProducts')}</h3>
+                    
                 </div>
                 <Slider {...settings}>
                     {allProducts.map((pro, index) => pro.rate >= 4 ? <div id='homeTop' key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3 px-2">
-                        <div className="product position-relative overflow-hidden">
-                            <Link to={`/product-detailes/${pro._id}`} className='text-decoration-none shadow-lg text-white'>
-                                <figure style={{ height: '250px' }} className='overflow-hidden'><img className='w-100 proImg' src={pro.images[0].secure_url} alt={pro.title} /></figure>
-                                <figcaption className='ps-2 py-2'>
-                                    <img width={'80px'} className='mb-2' src={pro.brandId?.logo.secure_url} alt={pro.brandId?.name} />
-                                    <h2 className='ProTitle'>{pro.title.slice(0, pro.title.indexOf(' ', 10))}</h2>
-                                    <h4>{pro.subCategoryId.name}</h4>
-                                    <h4><i className="bi bi-star-fill text-warning"></i> {pro.rate?pro.rate : 4.5}</h4>
-                                    {pro.appliedDiscount ? <h6 style={{ fontSize: '1rem', marginBottom: '10px' }}>price: <span className='text-decoration-line-through text-danger'>{pro.price}</span> {pro.priceAfterDiscount} </h6> : <h6 style={{ fontSize: '1rem', marginBottom: '10px' }}>price:{pro.price}</h6>}
-                                    <button className='detBtn btn' title='detailes'> View Detailes <i className='fa fa-arrow-right'></i></button>
-                                </figcaption>
-                            </Link>
-                            {favIds.includes(pro._id)?<AddToWishlistBtn id={pro._id} classes={'bi text-danger bi-heart-fill fs-4 px-2'}/>:<AddToWishlistBtn id={pro._id} classes={'bi bi-heart fs-4 px-2'}/>}
-                            <button onClick={function () { addingToCart(pro._id) }} id={`addBtn${pro._id}`} title='Add To Cart' className='proBtn w-100 rounded-bottom-2'><i className='fa fa-cart-plus'></i></button>
-                            {pro.appliedDiscount ? <div className='position-absolute sale me-3 text-center' >Sale</div> : ''}
-                        </div>
+                        <ProductCard pro={pro} favIds={favIds?favIds:[]}/>
                     </div> : '')}
                 </Slider>
               </div>
 
               <div className='row px-3 gx-1 gy-1'>
                 <div className='text-dark mb-3 d-flex justify-content-between align-items-center'>
-                        <h3 className='titleFontSize'><i className="bi text-center w-100 bi-shop-window position-relative"></i>  Brands</h3>
-                        <Link to={'/brands'} className='text-decoration-none link-light'><button style={{backgroundColor:'#40C9B4'}} className='btn'>See All <i className='bi bi-arrow-right'></i></button></Link>
+                        <h3 className='titleFontSize'><i className="bi text-center w-100 bi-shop-window position-relative"></i>  {t('public.Stores')}</h3>
+                        <Link to={'/brands'} className='text-decoration-none link-light'><button style={{backgroundColor:'#40C9B4'}} className='btn'>{t('public.seeAll')} <i className={localStorage.getItem('pageDir') === 'rtl'?'bi bi-arrow-left':'bi bi-arrow-right'}></i></button></Link>
                     </div>
-                  <Slider {...settings}>
-                      {allBrands.map((item) => <div key={item._id} className='col-lg-3 col-md-4 col-6'>
-                          <Link to={`/brands/${item._id}`} className='text-decoration-none link-light'>
-                              <figure  style={{ height: '300px' }} className='position-relative mb-0 overflow-hidden'>
-                                  <img src={item.logo.secure_url} alt={item.name} className='w-100 brandImg' />
-                              </figure>
-                          </Link>
+                  <Slider {...brandSetting}>
+                      {allBrands.map((item) => <div key={item._id} className='col-lg-3 col-md-4 col-6 px-2'>
+                          <BrandCard brand={item} favBrand={favBrand} home={true}/>
                       </div>
                       )}
                   </Slider>

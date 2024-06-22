@@ -1,3 +1,11 @@
+.publicPage .btn {
+  background-color: white !important;
+  color: black !important;
+}
+.publicPage .btn:hover {
+  color: black !important;
+  background-color: white !important;
+}
 .publicPage figure .proImg {
   width: 100%;
   height: 100%;
@@ -7,6 +15,6 @@
 .publicPage figure .brandImg {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
 }/*# sourceMappingURL=style.css.map */
