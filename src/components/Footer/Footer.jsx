@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
     const {t} = useTranslation();
     return <>
-        <footer className='py-5'>
+        <footer className='py-5 mt-5'>
             <div className="container py-5">
                 <div className="row gy-5">
                     <div className="col-lg-2 col-md-3 m-auto col-sm-6 d-flex col-6 px-2 align-self-center">

@@ -198,8 +198,8 @@ export default function Public() {
         <Helmet>
             <title>Puplic</title>
         </Helmet>
-      <div className="my-5 publicPage">
-          {!allCategories || !allProducts  || !allBrands? <LodingScrean /> : <div className='container-fluied px-3 my-5 py-5'>
+      <div className="mb-5 publicPage">
+          {!allCategories || !allProducts  || !allBrands? <LodingScrean /> : <div className='container-fluied px-3 mb-5 pb-5'>
               <div className="row mt-3 mb-4">
                 <Slider {...settings2}>
                     {allProducts.map((pro, index) => pro.priceAfterDiscount !== pro.price? 

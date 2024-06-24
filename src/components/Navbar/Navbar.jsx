@@ -9,6 +9,7 @@ import './style.css';
 export default function Navbar({clearUserData,curUser,changeLanguage,setDirection}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {i18n} = useTranslation();
     const numOfCartItems = useSelector((state) => state.getCartItemSlice.cartItems);
     const wishlistProductsItems = useSelector((store)=>store.getFavProductsSlice.wishlistItems);
     const numOfFavStors = useSelector((state) => state.favBrands.favBrandItems);
@@ -21,7 +22,7 @@ export default function Navbar({clearUserData,curUser,changeLanguage,setDirectio
     },[numOfCartItems])
   return (
     <>
-      <nav className="navbar navbar-expand-lg fixed-top shadow-lg flex-wrap">
+      <nav className="navbar navbar-expand-lg  sticky-top shadow-lg flex-wrap">
         <div className="container">
           <Link className="navbar-brand" to={"/"}>
             {" "}
@@ -128,17 +129,8 @@ export default function Navbar({clearUserData,curUser,changeLanguage,setDirectio
                 </ul>
 
                 <ul className="navbar-nav mb-2 mb-lg-0 ms-auto ">
-                  <li className="nav-item m-auto">
-                    <button
-                      onClick={function () {
-                        clearUserData();
-                        navigate("/login");
-                      }}
-                      className="btn btn-dark"
-                    >
-                      Log Out{" "}
-                      <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                    </button>
+                  <li className="nav-item d-flex justify-content-center align-items-center">
+                    <i className="bi bi-translate"></i>  <p onClick={changeLanguage} className='m-0 langSwitsher'>lang <span className='text-success'>({i18n.language})</span></p>
                   </li>
                 </ul>
               </>
@@ -179,17 +171,12 @@ export default function Navbar({clearUserData,curUser,changeLanguage,setDirectio
                 </ul>
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li className="nav-item">
-                    <Link className="nav-link btn btn-light" to={"/login"}>
-                      Login
+                    <Link className="nav-link link-dark" to={"/login"}>
+                      <i className='bi bi-person'></i> Login
                     </Link>
                   </li>
-                  <li className="nav-item ms-lg-2 mt-2 mt-lg-0">
-                    <Link
-                      className="nav-link link-light btn btn-dark"
-                      to={"/signup"}
-                    >
-                      SignUp
-                    </Link>
+                  <li className="nav-item d-flex justify-content-center align-items-center">
+                    <i className="bi bi-translate"></i> <p onClick={changeLanguage} className='m-0 langSwitsher'> lang <span className='text-success'>({i18n.language})</span></p>
                   </li>
                 </ul>
               </>

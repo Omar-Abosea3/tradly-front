@@ -26,8 +26,7 @@ import Cookies from 'js-cookies';
 import StatusPayment from './components/StatusPayment/SuccessPayment';
 import CancelPayment from './components/StatusPayment/CancelPayment';
 import { useTranslation } from 'react-i18next';
-
-
+import ProfileData from './components/Profile/ProfileData/ProfileData';
 
 
 export default function App() {
@@ -40,12 +39,13 @@ export default function App() {
     document.documentElement.dir = direction;
   };
   const bodyClasses = i18n.language ;
-  const changeLanguage = (lng = 'en') => {
-    i18n.changeLanguage(lng);
-    if(lng ===  'en'){
+  const changeLanguage = () => {
+    if(i18n.language === 'ar'){
+      i18n.changeLanguage('en');
       setDirection('ltr');
       localStorage.setItem('pageDir' , 'ltr');
     }else{
+      i18n.changeLanguage('ar');
       setDirection('rtl');
       localStorage.setItem('pageDir' , 'rtl');
     }
@@ -62,7 +62,6 @@ export default function App() {
   }
 
   useEffect(function () {
-    changeLanguage();
     if (Cookies.getItem("token") != null && curUser == null) {
       getUserData();
     }
@@ -114,7 +113,9 @@ export default function App() {
       {path:'brands',element:<Brands/>},
       {path:'subcategories/:id',element:<SubCategoryProducts/>},
       {path:'wishlist' , element:<ProtectedRoutes><WishlistProducts/></ProtectedRoutes>},
-      {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData}/></ProtectedRoutes>},
+      {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData}/></ProtectedRoutes> , children:[
+        {path:'',element:<ProfileData/>},
+      ]},
       {path:'brands/:id',element:<BrandProducts/>},
       {path:'product-detailes/:id',element:<ProductDetailes/>},
       {path:'cart',element:<ProtectedRoutes><Cart/></ProtectedRoutes>},

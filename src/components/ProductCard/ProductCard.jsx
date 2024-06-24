@@ -83,7 +83,7 @@ export default function ProductCard({pro , page , favIds}) {
                 }}
                 id={`addBtn${pro._id}`}
                 title="Add To Cart"
-                className="proBtn w-100 rounded-bottom-2 mb-2"
+                className="proBtn w-100  mb-2"
                 >
                 <i className="fa fa-cart-plus"></i> Cart
             </button>
@@ -93,7 +93,7 @@ export default function ProductCard({pro , page , favIds}) {
                 }}
                 id={`orderBtn${pro._id}`}
                 title="Order Now"
-                className="orderPtn w-100 rounded-bottom-2"
+                className="orderPtn w-100"
                 >
                <i className="bi bi-credit-card-fill"></i> Order 
             </button>

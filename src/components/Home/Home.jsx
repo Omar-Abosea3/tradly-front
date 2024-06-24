@@ -9,6 +9,7 @@ import noProducts from "../../assets/EmptyPtoducts.png";
 import $ from "jquery";
 import ProductCard from "../ProductCard/ProductCard";
 import { useTranslation } from "react-i18next";
+import ProductCardLoading from "../ProductCard/ProductCardLoading/ProductCardLoading";
 
 export default function Home() {
   const [product, setProduct] = useState(null);
@@ -213,12 +214,14 @@ export default function Home() {
   }, [wishlistProducts]);
   const handlePrevPage = () => {
     if (currentPage > 1) {
+      setProduct(null);
       setCurrentPage(currentPage- 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
+      setProduct(null);
       setCurrentPage(currentPage + 1);
     }
   };
@@ -425,9 +428,7 @@ export default function Home() {
           </div>
         </aside>
       </div>
-      {product == null ? (
-        <LodingScrean />
-      ) : (
+      
         <>
           <div
             id="noProducts"
@@ -504,7 +505,7 @@ export default function Home() {
                 <i className="fa-solid fa-circle-check"></i> Product Added
                 Successfully .
               </div>
-              {product.products.map((pro, index) => (
+              {product?product.products.map((pro, index) => (
                 <div
                   id="homeTop"
                   key={index}
@@ -512,11 +513,10 @@ export default function Home() {
                 >
                   <ProductCard pro={pro} favIds={favIds} />
                 </div>
-              ))}
+              )):<ProductCardLoading/>}
             </div>
           </div>
         </>
-      )}
     </>
   );
 }

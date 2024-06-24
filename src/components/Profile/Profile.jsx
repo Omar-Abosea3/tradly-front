@@ -5,6 +5,9 @@ import { useFormik } from 'formik';
 import $ from 'jquery';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import ProfileAsideNav from './ProfileAsideNav/ProfileAsideNav';
+import './style.css';
+import { Outlet } from 'react-router-dom';
 export default function Profile({clearUserData}) {
     const [userData, setuserData] = useState(null);
 
@@ -17,5 +20,16 @@ export default function Profile({clearUserData}) {
       <Helmet>
           <title>Profile</title>
       </Helmet>
+        <div className="row gx-0">
+            <div className="col-2">
+                <ProfileAsideNav/>
+            </div>
+            <div className="col-10">
+                <div id='profileContentBox' className='px-2'>
+                    <Outlet/>
+                </div>
+            </div>
+        </div>
+
   </>
 }
