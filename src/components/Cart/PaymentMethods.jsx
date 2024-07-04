@@ -105,7 +105,7 @@ export default function PaymentMethods() {
                     <label htmlFor="cash">Cash</label>
                 </div>
                 <div className='d-flex'>
-                    <input type="radio" onClick={() => {changePaymentMethod('card')}} className='me-1' name='paymentMethod' id='card' value={'card'} checked />
+                    <input type="radio" onClick={() => {changePaymentMethod('card')}} className='me-1' name='paymentMethod' id='card' value={'card'}/>
                     <label htmlFor="card">Card</label>
                 </div>
             </div>
