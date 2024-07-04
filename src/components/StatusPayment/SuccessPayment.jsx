@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import successPayment from '../../assets/success_payment.svg';
+import success_Payment from '../../assets/success_payment.svg';
 import lastTransaction from '../../assets/last_Transaction.svg';
 import { Placeholder } from "rsuite";
 export default function StatusPayment() {
@@ -30,8 +30,8 @@ export default function StatusPayment() {
     },[])
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
-                <img src={successPayment} alt="success payment" className="w-70 mb-3" />
-                <h3 className="fw-medium text-warning">Completed Successfully !</h3>
+                <img src={success_Payment} alt="success payment" className="w-70 mb-3" />
+                <h3 className="fw-medium text-black">Completed Successfully !</h3>
 
         </div>}
 
