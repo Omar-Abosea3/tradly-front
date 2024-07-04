@@ -192,6 +192,7 @@
     }
     .proImg{
         @include transition(0.3s , all );
+        object-fit: contain; 
     }
     &:hover .proImg{
         transform: scale(1.1,1.1);
@@ -208,6 +209,53 @@
         &:hover{
             background-color: rgb(212, 212, 212);
             color: #30ac9a;
+        }
+    }
+}
+#imageAndTextDetectionLoader{
+    z-index: 999999999;
+    .imageAndTextDetectionLoader {
+        --c:no-repeat linear-gradient(#2EA99E 0 0);
+        background: 
+          var(--c),var(--c),var(--c),
+          var(--c),var(--c),var(--c),
+          var(--c),var(--c),var(--c);
+        background-size: 16px 16px;
+        animation: 
+          l32-1 1s infinite,
+          l32-2 1s infinite;
+      }
+      @keyframes l32-1 {
+        0%,100% {width:45px;height: 45px}
+        35%,65% {width:65px;height: 65px}
+      }
+      @keyframes l32-2 {
+        0%,40%  {background-position: 0 0,0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,  50% 50% }
+        60%,100%{background-position: 0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,0 0,  50% 50% }
+      }
+}
+.formContainer{
+    background-color: white;
+    #circularLogo{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #2EA99E;
+        color:#ffffff;
+        font-size: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .loginBtn{
+        background-color: #2EA99E;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        &:hover{
+            background-color: #23827a;
+            color: white;
         }
     }
 }
@@ -440,6 +488,56 @@ nav{
 .login{
     width: fit-content;
 }
+.filtersContainerparent{
+    width: 30%;
+    height: 100vh;
+    background-color: whitesmoke;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    div i{
+        color: #30AC9A;
+    }
+    div:nth-child(1){
+        cursor: pointer;
+    }
+    .filtersContainer{
+        width: 100%;
+        height: 100vh;
+        background-color: whitesmoke;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        &::-webkit-scrollbar{
+            width: 10px;
+        }
+        .filtersTitle{
+            background-color: #33907C;
+            color: white;
+            border-radius: 5px;
+            padding: 5px 5px;
+        }
+    }
+    .closeFilterSideBar{
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        z-index: 999999999 !important;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        padding: 20px 20px 0px;
+        i{
+            font-size: 24px;
+            color: black;
+        }
+    }
+}
 
 
 @media screen and (max-width:550px) {
@@ -499,6 +597,19 @@ nav{
             padding:10px 15px !important;
         }
     }
+
+}
+@media screen and (max-width:1000px) {
+    .filtersContainerparent{
+        width:50%;
+      }
+
+}
+@media screen and (max-width:650px) {
+    .filtersContainerparent{
+        width:100%;
+    }
+    
 
 }
 @media screen and (max-width:320px) {
@@ -627,41 +738,7 @@ footer{
     align-items:center;
   }
 
-  .filtersContainerparent{
-    width: 30%;
-    height: 100vh;
-    background-color: whitesmoke;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    div i{
-        color: #30AC9A;
-    }
-    div:nth-child(1){
-        cursor: pointer;
-    }
-    .filtersContainer{
-        width: 100%;
-        height: 100vh;
-        background-color: whitesmoke;
-        z-index: 99999;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        &::-webkit-scrollbar{
-            width: 10px;
-        }
-        .filtersTitle{
-            background-color: #33907C;
-            color: white;
-            border-radius: 5px;
-            padding: 5px 5px;
-        }
-    }
-  }
+  
 
   #noProducts{
     z-index: 999;

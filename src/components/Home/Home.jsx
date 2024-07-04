@@ -10,16 +10,23 @@ import $ from "jquery";
 import ProductCard from "../ProductCard/ProductCard";
 import { useTranslation } from "react-i18next";
 import ProductCardLoading from "../ProductCard/ProductCardLoading/ProductCardLoading";
+import { useLocation } from "react-router-dom";
+import LoadingImageAndTextAPI from "./LoadingImageAndTextAPI";
+import { Message, toaster } from "rsuite";
 
 export default function Home() {
   const [product, setProduct] = useState(null);
   const [filters, setFilters] = useState({});
+  const [myFilters, setmyFilters] = useState({});
   const [allCategories, setallCategories] = useState(null);
+  const [allBrands, setallBrands] = useState(null);
   const [categoriesId, setcategoriesId] = useState([]);
+  const [brandsId, setbrandsId] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [favIds, setfavIds] = useState([]);
   const {i18n} = useTranslation();
+  const location = useLocation();
   const wishlistProducts = useSelector(
     (store) => store.getFavProductsSlice.wishlistProducts
   );
@@ -45,12 +52,7 @@ export default function Home() {
         setIsOpen(!isOpen);
 
     };
-    const handleImageFileChange = (event) => {
-        const file = event.target.files[0];
-        console.log(file);
-        setimageFile(file);
-        setIsOpen(!isOpen);
-    };
+
       
     const handleSearchTextChange = () => {
         const text = $('#searchTextInput').val();
@@ -71,23 +73,17 @@ export default function Home() {
       dispatch(getCartItemsData());
       dispatch(getFavProductsData());
       console.log(data);
-      getAllCategories();
       setProduct(data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function getAllCategories() {
-    try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_APIBASEURL}/categories`
-      );
-      console.log(data);
-      setallCategories(data.categories);
-    } catch (error) {
-      console.log(error);
-    }
+  async function getAllCategoriesAndBrands() {
+    const categoriesData = JSON.parse(localStorage.getItem('categories'));
+    setallCategories(categoriesData); 
+    const brandsData = JSON.parse(localStorage.getItem('brands'));
+    setallBrands(brandsData); 
   }
 
   function toggleAside() {
@@ -97,16 +93,22 @@ export default function Home() {
       $(".filtersContainerparent").removeClass("end-100");
     } else {
       console.log(2);
-      $(".filtersContainerparent").animate({ left: "-30%" }, 2000);
+      $(".filtersContainerparent").animate({ left: '-'+ $('.filtersContainerparent').css('width').toString() }, 2000);
       $(".filtersContainerparent").addClass("end-100");
     }
+  }
+
+  const closeFilters = () => {
+    console.log('-'+ $('.filtersContainerparent').css('width'));
+    $(".filtersContainerparent").animate({ left: '-'+ $('.filtersContainerparent').css('width') }, 2000);
+    $(".filtersContainerparent").addClass("end-100");
   }
 
   function extractPriceAndSetFilters(e) {
     const priceText = e.target.value;
     let minPrice;
     let maxPrice;
-    const newFilters = { ...filters };
+    const newFilters = { ...filters , ...myFilters };
     if (typeof priceText === "string") {
       if (priceText.length <= 18) {
         minPrice = parseInt(
@@ -117,7 +119,7 @@ export default function Home() {
         maxPrice = parseInt(priceText.slice(priceText.indexOf(" ", 13) + 1));
         console.log(maxPrice);
         newFilters["price[lte]"] = maxPrice;
-        setFilters(newFilters);
+        setmyFilters(newFilters);
       } else {
         minPrice = parseInt(
           priceText.slice(priceText.indexOf(" ") + 1, priceText.indexOf(" ", 9))
@@ -127,7 +129,7 @@ export default function Home() {
         maxPrice = parseInt(priceText.slice(priceText.indexOf(" ", 16) + 1));
         console.log(maxPrice);
         newFilters["price[lte]"] = maxPrice;
-        setFilters(newFilters);
+        setmyFilters(newFilters);
       }
     }
   }
@@ -145,15 +147,36 @@ export default function Home() {
       console.log(catIds);
     }
     setcategoriesId(catIds);
-    const newFilters = { ...filters };
+    const newFilters = { ...filters , ...myFilters };
     newFilters["categoryId[in]"] = catIds;
     console.log(newFilters);
-    setFilters(newFilters);
+    setmyFilters(newFilters);
   }
 
-  async function getProductsByTextDetection() {
+  function getCustomBrand(e, id) {
+    console.log(e.target.checked);
+    const brandsIds = [...brandsId];
+    if (e.target.checked) {
+      brandsIds.push(id);
+      console.log(brandsIds);
+    } else {
+      console.log("hello2");
+      brandsIds.splice(categoriesId.indexOf(id), 1);
+    }
+    setbrandsId(brandsIds);
+    const newFilters = { ...filters , ...myFilters };
+    newFilters["brandId[in]"] = brandsIds;
+    setmyFilters(newFilters);
+  }
+
+  async function getProductsByTextDetection(event) {
+    $('#imageAndTextDetectionLoader').removeClass('d-none');
+    const file = event.target.files[0];
+    console.log(file);
+    settextFile(file);
     const formData = new FormData();
-    formData.append('image' , textFile);
+    formData.append('image' , file);
+    setIsOpen(!isOpen);
     console.log('hello in text detection function');
     
     try {
@@ -162,29 +185,60 @@ export default function Home() {
           'Content-Type': 'multipart/form-data'
         }
       });
+      $('#imageAndTextDetectionLoader').addClass('d-none');
       console.log(data);
       setTotalPages(data.numOfPages);
       setProduct(data);
+
     } catch (error) {
+      $('#imageAndTextDetectionLoader').addClass('d-none');
+      toaster.push(<Message closable showIcon type="error">This word is not matched any product please take a clear photo and try again</Message> , {placement: 'topCenter', duration: 5000 });
       console.log(error);
     }
     
   }
 
   const getProductsWithImageDetection = async (event) => {
+    $('#imageAndTextDetectionLoader').removeClass('d-none');
     const file = event.target.files[0];
+    setimageFile(file);
     const formData = new FormData();
     formData.append('image' , file);
     setIsOpen(!isOpen);
     try {
       const {data} = await axios.post(`${process.env.REACT_APP_APIBASEURL}/products/search-image` , formData);
+      $('#imageAndTextDetectionLoader').addClass('d-none');
       console.log(data);
       setTotalPages(data.numOfPages);
       setProduct(data);
     } catch (error) {
+      $('#imageAndTextDetectionLoader').addClass('d-none');
       console.log(error);
     }
   }
+
+  const saveFilters = () => {
+    console.log(myFilters);
+    setFilters(myFilters);
+    closeFilters();
+  }
+  const resetFilters = async () => {
+    const inputs = document.querySelectorAll('.filtersContainerparent input');
+    const inputsArray = Array.from(inputs);
+    inputsArray.map((ele) => {
+      ele.checked = false;
+    });
+    setbrandsId([]);
+    setcategoriesId([]);
+    setmyFilters({});
+    setCurrentPage(1);
+    setFilters({});
+    closeFilters();
+  }
+  useEffect(() => {
+    
+    getAllCategoriesAndBrands();
+  },[]);
   const memo2 = useMemo(
     function () {
       getProduct();
@@ -231,9 +285,6 @@ export default function Home() {
       setFilters(newFilters);
   },[textSearch]);
 
-  const textDetection = useMemo(()=>{
-    getProductsByTextDetection();
-  },[textFile])
   // const imageDetection = useMemo(()=>{
   //   getProductsWithImageDetection();
   // },[imageFile])
@@ -246,6 +297,9 @@ export default function Home() {
         <title>Home</title>
       </Helmet>
       <div className="position-fixed position-relative top-0 end-100 filtersContainerparent">
+        <div className="closeFilterSideBar">
+          <i onClick={closeFilters} className="bi bi-x"></i>
+        </div>
         <div
           id="toggleAside"
           onClick={toggleAside}
@@ -412,23 +466,49 @@ export default function Home() {
                 id="panelsStayOpen-collapseThree"
                 className="accordion-collapse collapse"
               >
+                
                 <div className="accordion-body">
-                  <strong>This is the third item's accordion body.</strong> It
-                  is hidden by default, until the collapse plugin adds the
-                  appropriate classes that we use to style each element. These
-                  classes control the overall appearance, as well as the showing
-                  and hiding via CSS transitions. You can modify any of this
-                  with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
-                  <code>.accordion-body</code>, though the transition does limit
-                  overflow.
+                  <div
+                    id="brands"
+                    className="d-flex filtersFontSize w-100 justify-content-center align-items-center flex-wrap"
+                  >
+                    {!allBrands ? (
+                      ""
+                    ) : (
+                      <>
+                        {allBrands.map((brand) => (
+                          <label
+                            onChange={(e) => {
+                              getCustomBrand(e, brand._id);
+                            }}
+                            key={brand._id}
+                            className="w-100 mb-2"
+                            htmlFor={`filterbrand${brand._id}`}
+                          >
+                            <input
+                              type="checkbox"
+                              id={`filterbrand${brand._id}`}
+                              className="form-check-input me-1"
+                              value={brand._id}
+                              name="brand"
+                            />
+                            {brand.name}
+                          </label>
+                        ))}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div>
+            <button id="saveFilterBtn" onClick={saveFilters} className="btn btn-primary mx-2">save</button>
+            <button id="resetFilterBtn" onClick={resetFilters} className="btn btn-danger">reset</button>
+          </div>
         </aside>
       </div>
-      
+      <LoadingImageAndTextAPI/>
         <>
           <div
             id="noProducts"
@@ -436,7 +516,7 @@ export default function Home() {
           >
             <img className="w-25" src={noProducts} alt="no products" />
           </div>
-          <div className="container my-5 pt-5">
+          <div className="container mt-5">
           <div className="w-100 row justify-content-center align-items-center gx-2">
             <div className="col-lg-6 col-12 d-flex align-items-center">
                 <div className="searchInputContainer col-10 d-flex align-items-center gap-1 py-1 px-1 rounded-5">
@@ -456,30 +536,17 @@ export default function Home() {
                 </button>
                 {isOpen && (
                   <div className="dropdown-menu">
-                    <button onClick={openTextDetectionInput}><i className="bi bi-file-text"></i> Scan Text <input type="file" onChange={handleTextFileChange} id='scanTextInput' className='d-none'/></button>
+                    <button onClick={openTextDetectionInput}><i className="bi bi-file-text"></i> Scan Text <input type="file" onChange={(e) => {getProductsByTextDetection(e)}} id='scanTextInput' className='d-none'/></button>
                     <button onClick={openImageDetectionInput}><i className="bi bi-file-earmark-image"></i> Scan Image <input type="file" onChange={(e) => {getProductsWithImageDetection(e)}} id='scanImageInput' className='d-none'/></button>
                   </div>
                 )}
               </div>
             </div>
-            {/* <div className="col-2">
-              <div className="dropdown">
-                <button className="dropdown-icon" onClick={toggleDropdown}>
-                  <i className="bi bi-list"></i>
-                </button>
-                {isOpen && (
-                  <div className="dropdown-menu">
-                    <button>Option 1</button>
-                    <button>Option 2</button>
-                    <button>Option 3</button>
-                  </div>
-                )}
-              </div>
-            </div> */}
+           
           </div>
         </div>
           <div className="container-fluid">
-            <div className="row mt-3 justify-content-center gy-4">
+            <div className="row justify-content-center gy-4">
               <div className="d-flex justify-content-between align-items-center">
                 <h2>
                   <i className="bi bi-border-all"></i> All Products.

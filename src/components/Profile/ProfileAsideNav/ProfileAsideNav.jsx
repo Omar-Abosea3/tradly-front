@@ -29,6 +29,15 @@ export default function ProfileAsideNav() {
               </Link>
             </li>
             <li className="nav-item mb-3">
+              <Link className="nav-link d-flex flex-wrap justify-content-center align-items-center" to={"/profile/wishlist"}>
+                {" "}
+                <span className="w-100 text-center">
+                  <i className="bi bi-clock-history"></i>
+                </span>{" "}
+                <span className="text-center">Orders History</span>
+              </Link>
+            </li>
+            <li className="nav-item mb-3">
               <Link className="nav-link d-flex flex-wrap justify-content-center align-items-center" to={"/profile/fav-stors"}>
                 {" "}
                 <span className="w-100 text-center">

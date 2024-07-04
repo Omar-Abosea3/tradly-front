@@ -38,7 +38,6 @@ export default function App() {
   const setDirection = (direction) => {
     document.documentElement.dir = direction;
   };
-  const bodyClasses = i18n.language ;
   const changeLanguage = () => {
     if(i18n.language === 'ar'){
       i18n.changeLanguage('en');
@@ -66,7 +65,9 @@ export default function App() {
       getUserData();
     }
   }, []);
-
+  useEffect(() => {
+    document.body.className = i18n.language;
+  },[i18n.language])
   function ProtectedRoutes({children}){
 
     if(Cookies.getItem("token") == null){
@@ -135,7 +136,7 @@ export default function App() {
 
   return <>
       <Online>
-        <div className={bodyClasses}>
+        <div>
           <RouterProvider router={router} />
         </div>
       </Online>

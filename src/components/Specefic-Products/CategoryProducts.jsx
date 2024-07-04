@@ -8,15 +8,18 @@ import Slider from 'react-slick';
 import ProductCard from '../ProductCard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
+import { Placeholder } from 'rsuite';
+import ProductCardLoading from '../ProductCard/ProductCardLoading/ProductCardLoading';
 
 export default function CategoryProducts() {
     const {id} = useParams();
-    const [SpecCategory, setSpecCategory] = useState([]);
-    const [SubCategories, setSubCategories] = useState([]);
+    const [SpecCategory, setSpecCategory] = useState(null);
+    const [SubCategories, setSubCategories] = useState(null);
     const [PageTitle, setPageTitle] = useState('Category');
     const [favIds, setfavIds] = useState([]);
     const wishlistProducts = useSelector((store) => store.getFavProductsSlice.wishlistProducts);
     const dispatch = useDispatch();
+    const supCatArr = [1 , 2 , 3 , 4 , 5];
     const settings = {
         dots: true,
         infinite: true,
@@ -57,6 +60,8 @@ export default function CategoryProducts() {
             setSubCategories(data.category.subCategories);
         } catch (error) {
             console.log(error);
+            setSpecCategory([]);
+            setSubCategories([]);
         }
     }
     useEffect(function(){
@@ -78,14 +83,13 @@ export default function CategoryProducts() {
         <Helmet>
             <title>{PageTitle}</title>
         </Helmet>
-        {!SpecCategory.length || !SubCategories.length? <LodingScrean /> : SpecCategory.length?<> 
+         
                 <div className='w-100 px-5 mt-5 pt-5'>
                     <div className='text-dark w-100 mb-3 mt-5 d-flex justify-content-between align-items-center'>
                         <h3 className='mb-3 titleFontSize'><i className="bi bi-collection"></i> All SubCategories</h3>
-                        <Link to={'/subcategories'} className='text-decoration-none link-light'><button style={{ backgroundColor: '#40C9B4' }} className='btn'>See All <i className='bi bi-arrow-right'></i></button></Link>
                     </div>
                     <Slider {...settings}>
-                        {SubCategories?.map((item) => <div key={item._id} >
+                        {!SubCategories?supCatArr.map((item , index) => <div key={index} ><Placeholder.Graph active height={350} /></div>):SubCategories.map((item) => <div key={item._id} >
                             <Link to={`/subcategories/${item._id}`} className='text-decoration-none link-light'>
                                 <figure style={{ height: '300px' }} className='position-relative mb-0 overflow-hidden'>
                                     <img style={{objectFit:'contain'}} src={item.image.secure_url} alt={item.name} loading='lazy' className='w-100 h-100' />
@@ -98,15 +102,15 @@ export default function CategoryProducts() {
                         )}
                     </Slider>
                 </div>
-        <div className="container-fluid d-flex justify-content-center py-5">
+        <div className="container-fluid py-5">
             <div style={{ display: 'none', zIndex: '9999' , bottom:'2%' }} className="sucMsg p-3 mt-0 alert bg-black text-white position-fixed"><i className="fa-solid fa-circle-check"></i> Product Added Successfully .</div>
             <div className="row py-5 gy-4">
                 <h2 className='titleFontSize'><i className="bi bi-border-all"></i> Category Products.</h2>
-                {SpecCategory?.map((pro, index) => <div id='homeTop' key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3">
+                {SpecCategory?SpecCategory.map((pro, index) => <div key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3">
                         <ProductCard pro={pro} favIds={favIds}/>
-                </div>)}
+                </div>):<ProductCardLoading/>}
             </div>
-        </div> </>: <div className="vh-100 d-flex flex-wrap pt-5 text-center justify-content-center align-content-center"><img className='w-25' src={emptyOrder} alt="Empty Order" /> <h2 className='w-100'>This Category Is Empty !</h2></div>}
-
+            {SpecCategory?.length === 0 && SubCategories?.length === 0 && <div className="vh-100 d-flex flex-wrap pt-5 text-center justify-content-center align-content-center"><img className='w-25' src={emptyOrder} alt="Empty Order" /> <h2 className='w-100'>This Category Is Empty !</h2></div>}
+        </div> 
     </>
 }

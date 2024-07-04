@@ -7,6 +7,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useParams } from 'react-router-dom';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import { useDispatch, useSelector } from 'react-redux';
+import ProductCardLoading from '../ProductCard/ProductCardLoading/ProductCardLoading';
 
 export default function SubCategoryProducts() {
     const {id} = useParams();
@@ -23,6 +24,7 @@ export default function SubCategoryProducts() {
             setSubCategories(data.subCategory.Products);
         } catch (error) {
             console.log(error);
+            setSubCategories([]);
         }
     }
 
@@ -45,14 +47,14 @@ export default function SubCategoryProducts() {
         <Helmet>
             <title>{PageTitle}</title>
         </Helmet>
-        {SubCategories == null? <LodingScrean /> : SubCategories.length !== 0? <div className="container-fluid d-flex justify-content-center py-5">
+         <div className="container-fluid py-5">
             <div style={{ display: 'none', zIndex: '9999' , bottom:'2%' }} className="sucMsg p-3 mt-0 alert bg-black text-white position-fixed"><i className="fa-solid fa-circle-check"></i> Product Added Successfully .</div>
             <div className="row py-5 mt-5 gy-4">
-                {SubCategories.map((pro, index) => <div id='homeTop' key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3">
+                {SubCategories?SubCategories.map((pro, index) => <div id='homeTop' key={index} className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3">
                         <ProductCard pro={pro} favIds={favIds}/>
-                    </div>)}
+                    </div>):<ProductCardLoading/>}
             </div>
-        </div> : <div className="vh-100 d-flex flex-wrap pt-5 text-center justify-content-center align-content-center"><img className='w-25' src={emptyOrder} alt="Empty Order" /> <h2 className='w-100'>This Category Is Empty !</h2></div>}
-
+        </div>
+        {SubCategories?.length === 0 &&  <div className="vh-100 d-flex flex-wrap pt-5 text-center justify-content-center align-content-center"><img className='w-25' src={emptyOrder} alt="Empty Order" /> <h2 className='w-100'>This Category Is Empty !</h2></div>}
     </>
 }

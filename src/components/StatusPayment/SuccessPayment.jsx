@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import successPayment from '../../assets/success_payment.svg';
+import lastTransaction from '../../assets/last_Transaction.svg';
+import { Placeholder } from "rsuite";
 export default function StatusPayment() {
     const [paymentStatus, setpaymentStatus] = useState(null);
     const {ordertoken} = useParams();
@@ -28,15 +30,25 @@ export default function StatusPayment() {
     },[])
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="alert alert-success w-75"> تمت عملية الدفع بنجاح</div>
+                <img src={successPayment} alt="success payment" className="w-70 mb-3" />
+                <h3 className="fw-medium text-warning">Completed Successfully !</h3>
+
         </div>}
 
         {paymentStatus === false && <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="alert alert-warning w-75"> تم تأكيد هذا الطلب من قبل</div>
+                <img src={lastTransaction} alt="success payment" className="w-70 mb-3" />
+                <h3 className="fw-medium text-warning">This Transaction Already ended !</h3>
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="alert alert-primary w-75">جاري تحميل الصفحة</div>
+                <Placeholder.Graph active height={300} width={300} className="rounded-4 shadow-lg">
+                    <div className="p-3">
+                        <Placeholder.Paragraph active color="black"/>
+                        <Placeholder.Paragraph active color="black"/>
+                        <Placeholder.Paragraph active color="black"/>
+                        <Placeholder.Paragraph active color="black"/>
+                    </div>
+                </Placeholder.Graph>
         </div>}
   </>
 }

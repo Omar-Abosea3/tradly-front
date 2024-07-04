@@ -5,6 +5,8 @@ import $ from 'jquery';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import Cookies from 'js-cookies';
+import StaticAuthComponent from '../StaticAuthComponent/StaticAuthComponent';
+
 export default function Login({ getUserData }) {
   const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ export default function Login({ getUserData }) {
   }
 
   async function sendNewUser(nUser) {
+    loadingImog();
     try {
       const { data } = await axios.post(`${process.env.REACT_APP_APIBASEURL}/auth/signin`, nUser);
       if (data.message === 'success') {
@@ -67,12 +70,13 @@ export default function Login({ getUserData }) {
     <Helmet>
       <title>Login</title>
     </Helmet>
-    <div className="container py-5 my-5 d-flex justify-content-center align-items-center">
-      <div className="signUpForm bg-light w-75 producInWideScreen mt-5 p-5 shadow-lg">
-        <div className="w-100 mb-3 text-center">
-          <img className='w-50' src={require('../../assets/omx-ecommerce-low-resolution-logo-color-on-transparent-background.png')} alt="Our Logo" />
-        </div>
-        <form className='px-1 col-12 ' onSubmit={myFormik.handleSubmit}>
+    <div className='formContainer p-3 bg-white'>
+    <div className="row">
+      <div className='col-lg-6 col-md-6 col-12 d-flex align-items-center vh-100'>
+        <form className='px-3 col-12 ' onSubmit={myFormik.handleSubmit}>
+          <div className="w-100 mb-3 d-flex justify-content-center">
+            <div id='circularLogo'>T</div>
+          </div>
           <div style={{ display: 'none' }} className="errMsg mb-3 text-center alert alert-danger py-1">Email or Password is not correct.</div>
           <div className="w-100">
           <label className='mb-2' htmlFor="email">email</label>
@@ -84,13 +88,13 @@ export default function Login({ getUserData }) {
           {myFormik.errors.password && myFormik.touched.password ? <div className="alert py-1 alert-warning">{myFormik.errors.password}</div> : ''}
           </div>
 
-          <button onClick={loadingImog} type='submit' className='btn loginBtn w-100 mt-4'>Login</button>
+          <button type='submit' className='btn loginBtn w-100 mt-4'>Login</button>
           <hr/>
-          <h6 className='text-center'>Not a member yet? <Link className="text-decoration-none" to={"/signup"}>Create Account</Link></h6>
-          <h6 className='text-center'>or rou are? <Link className="text-decoration-none" to={"/forgetpassword"}>forget password</Link></h6>
-        </form>
+          <h6 className='text-center'>Not a member yet? <Link className="text-decoration-none text-success" to={"/signup"}>Create Account</Link></h6>
+          <h6 className='text-center'>or rou are? <Link className="text-decoration-none text-success" to={"/forgetpassword"}>forget password</Link></h6>
+          <h6 className='text-center'>Go To <Link className="text-decoration-none text-success" to={"/"}>Home</Link></h6>
 
-        <div className="col-12 d-flex justify-content-center align-items-center">
+          <div className="col-12 d-flex justify-content-center align-items-center">
           <div className="MyIcons">
             <i className='fa-brands fa-facebook-f'></i>
           </div>
@@ -104,7 +108,16 @@ export default function Login({ getUserData }) {
             <i className='fa fa-vcard'></i>
           </div>
         </div>
+        </form>
+
+        
+      
       </div>
+
+      <div className="col-6 d-lg-block d-md-block d-sm-none d-none position-relative vh-100">
+        <StaticAuthComponent/>
+      </div>
+    </div>
     </div>
 
   </>

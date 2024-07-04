@@ -6,10 +6,12 @@ import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import { useDispatch } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductCard({pro , page , favIds}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {i18n} = useTranslation()
     async function addingToCart(id){
         if(!Cookies.getItem('token')){
             navigate('/login');
@@ -30,7 +32,7 @@ export default function ProductCard({pro , page , favIds}) {
             <img
               className="w-100  proImg"
               src={pro.images[0].secure_url}
-              alt={pro.title}
+              alt={i18n.language === 'ar' ? pro.arTitle : pro.title}
             />
           </figure>
           <figcaption className="ps-2 py-2">
@@ -41,7 +43,7 @@ export default function ProductCard({pro , page , favIds}) {
               alt={pro.brandId?.name}
             /> */}
             <h2 className="ProTitle text-truncate">
-              {pro.title}
+              {i18n.language === 'ar' ? pro.arTitle : pro.title}
             </h2>
             <h4>{pro.subCategoryId.name}</h4>
             <h4>
