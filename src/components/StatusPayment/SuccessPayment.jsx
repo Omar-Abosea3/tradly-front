@@ -31,13 +31,13 @@ export default function StatusPayment() {
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
                 <img src={success_Payment} alt="success payment" className="w-70 mb-3" />
-                <h3 className="fw-medium text-black">Completed Successfully !</h3>
+                {/* <h3 className="fw-medium text-black">Completed Successfully !</h3> */}
 
         </div>}
 
         {paymentStatus === false && <div className="d-flex justify-content-center align-items-center vh-100">
                 <img src={lastTransaction} alt="success payment" className="w-70 mb-3" />
-                <h3 className="fw-medium text-warning">This Transaction Already ended !</h3>
+                {/* <h3 className="fw-medium text-warning">This Transaction Already ended !</h3> */}
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">

@@ -32,13 +32,13 @@ export default function CancelPayment() {
   return <>
         {paymentStatus === true && <div className="d-flex justify-content-center align-items-center vh-100">
                 <img src={cancel_payment} alt="cancel payment" loading='lazy' className='w-50 mb-3' />
-                <h3 className="fw-medium text-danger">Canceled Process !</h3>
+                {/* <h3 className="fw-medium text-danger">Canceled Process !</h3> */}
 
         </div>}
 
         {paymentStatus === false && <div className="d-flex justify-content-center align-items-center vh-100">
                 <img src={last_Transaction} alt="cancel payment" loading='lazy' className='w-50 mb-3' />
-                <h3 className="fw-medium text-warning">This Transaction Already ended !</h3>
+                {/* <h3 className="fw-medium text-warning">This Transaction Already ended !</h3> */}
         </div>}
 
         {paymentStatus === null && <div className="d-flex justify-content-center align-items-center vh-100">
