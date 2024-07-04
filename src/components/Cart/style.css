@@ -1,1 +1,21 @@
-/*# sourceMappingURL=style.css.map */
+#PaymentMethodsLayer {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.304);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  overflow-y: auto;
+  z-index: 999999;
+}
+#PaymentMethodsLayer #PaymentForm {
+  background-color: white;
+  width: 70%;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0px 0px 15px rgba(42, 182, 170, 0.662745098);
+}/*# sourceMappingURL=style.css.map */

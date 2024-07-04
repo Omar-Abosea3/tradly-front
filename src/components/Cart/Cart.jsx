@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import Cookies from 'js-cookies';
 import CartItemCard from './CartItemCard';
+import PaymentMethods from './PaymentMethods';
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -206,7 +207,7 @@ export default function Cart() {
                 ))}
                 <button
                   onClick={function () {
-                    navigate("/payment");
+                    $('#PaymentMethodsLayer').css('display' , 'flex');
                   }}
                   className=" proBtn5 rounded-0 w-100"
                 >
@@ -217,6 +218,7 @@ export default function Cart() {
           </>
         )}
       </div>
+      <PaymentMethods/>
     </>
   );
 }

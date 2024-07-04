@@ -223,20 +223,20 @@ export default function Home() {
     closeFilters();
   }
   const resetFilters = async () => {
-    const inputs = document.querySelectorAll('.filtersContainerparent input');
-    const inputsArray = Array.from(inputs);
-    inputsArray.map((ele) => {
-      ele.checked = false;
-    });
-    setbrandsId([]);
-    setcategoriesId([]);
-    setmyFilters({});
-    setCurrentPage(1);
-    setFilters({});
-    closeFilters();
+    // const inputs = document.querySelectorAll('.filtersContainerparent input');
+    // const inputsArray = Array.from(inputs);
+    // inputsArray.map((ele) => {
+    //   ele.checked = false;
+    // });
+    // setbrandsId([]);
+    // setcategoriesId([]);
+    // setmyFilters({});
+    // setCurrentPage(1);
+    // setFilters({});
+    // closeFilters();
+    window.location.reload();
   }
   useEffect(() => {
-    
     getAllCategoriesAndBrands();
   },[]);
   const memo2 = useMemo(
@@ -545,7 +545,7 @@ export default function Home() {
            
           </div>
         </div>
-          <div className="container-fluid">
+          <div className="container-fluid mt-5">
             <div className="row justify-content-center gy-4">
               <div className="d-flex justify-content-between align-items-center">
                 <h2>

@@ -15,9 +15,8 @@ export const getCartItemsData=createAsyncThunk('getcartitem/getCartItemsData' , 
        if (data.message === "success") {
         $(`#removeBtn${id}`).html(`Remove Product <i class="bi bi-cart-dash-fill"></i>`);
         console.log(data);
-        // if(!data.cartProducts.products?.length){
-        //     $('#emptyCart').html(`<div class="emptyCartMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptycart}' alt="Empty Cart" /></div>`).addClass('vh-100');
-        //     return false ; 
+        // if(!data.cartProducts.length){
+        //     $('#emptyCart').html(`<div class="emptyCartMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptycart}' alt="Empty Cart" /></div>`).addClass('vh-100'); 
         // }
         localStorage.setItem('cartId',data._id);
         return  data ;
@@ -44,14 +43,14 @@ const getCartItemSlice = createSlice({
                 state.cartItems = 0;
                 state.TotalCartPrice = 0;
                 $('#emptyCart').html(`<div class="emptyCartMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptycart}' alt="Empty Cart" /></div>`).addClass('vh-100');
-            }else if( action.payload?.cartProducts?.products?.length===0){
+            }else if( action.payload?.cartProducts?.length===0){
                 console.log('iam here');
                 state.cartItems = 0;
                 state.TotalCartPrice = 0;
                 state.CartProducts = null;
             }else{
                 state.CartProducts = action.payload.cartProducts;
-                state.cartItems = action.payload.cartProducts.products.length;
+                state.cartItems = action.payload.cartProducts.length;
                 state.TotalCartPrice = action.payload.supTotal;
             }
 

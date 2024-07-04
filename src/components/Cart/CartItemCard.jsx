@@ -5,7 +5,7 @@ export default function CartItemCard({product , index , checkQuantity2 , checkQu
   {console.log(product)}
     <section key={index}><div className="container-fluid bg-white rounded-5 shadow-lg cart-products">
               <figure className="row shadow-lg gy-3">
-                <div  className="col-lg-4 col-md-4 col-sm-12 d-flex justify-content-center align-items-center px-3 ">
+                <div  className="col-lg-3 col-md-3 col-sm-12 d-flex justify-content-center align-items-center px-3 ">
                     <img className='proImg' width={100} src={product.product.images[0].secure_url} alt={product.product.title} />
                 </div>
                 <figcaption className='col-lg-8 col-md-8 col-sm-12 d-flex ps-3 pb-3 w-75 align-content-start flex-wrap'>
