@@ -211,7 +211,7 @@ export default function Home() {
       console.log(data);
       setTotalPages(1);
       setProduct(data);
-      toaster.push(<Message closable showIcon type="success">we find Product of {data.name}</Message> , {placement:'topCenter' , duration:'5000' });
+      toaster.push(<Message closable showIcon type="success">we find Product of {data.text}</Message> , {placement:'topCenter' , duration:'5000' });
     } catch (error) {
       $('#imageAndTextDetectionLoader').addClass('d-none');
       toaster.push(<Message closable showIcon type="error">{error.response.data.message}</Message> , {placement:'topCenter' , duration:'5000' });
