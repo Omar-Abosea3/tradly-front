@@ -188,10 +188,11 @@ export default function Home() {
       $('#imageAndTextDetectionLoader').addClass('d-none');
       console.log(data);
       setProduct(data);
-
+      setTotalPages(1);
+      toaster.push(<Message closable showIcon type="success">we find Products of {data.text}</Message> , {placement:'topCenter' , duration:'5000' });
     } catch (error) {
       $('#imageAndTextDetectionLoader').addClass('d-none');
-      toaster.push(<Message closable showIcon type="error">This word is not matched any product please take a clear photo and try again</Message> , {placement: 'topCenter', duration: 5000 });
+      toaster.push(<Message closable showIcon type="error">{error.response.data.message}</Message> , {placement: 'topCenter', duration: 5000 });
       console.log(error);
     }
     
@@ -210,8 +211,10 @@ export default function Home() {
       console.log(data);
       setTotalPages(data.numOfPages);
       setProduct(data);
+      toaster.push(<Message closable showIcon type="success">we find Product of {data.name}</Message> , {placement:'topCenter' , duration:'5000' });
     } catch (error) {
       $('#imageAndTextDetectionLoader').addClass('d-none');
+      toaster.push(<Message closable showIcon type="error">{error.response.data.message}</Message> , {placement:'topCenter' , duration:'5000' });
       console.log(error);
     }
   }
