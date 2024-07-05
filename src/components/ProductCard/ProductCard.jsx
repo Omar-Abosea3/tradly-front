@@ -28,7 +28,7 @@ export default function ProductCard({pro , page , favIds}) {
           to={`/product-detailes/${pro._id}`}
           className="text-decoration-none shadow-lg text-white"
         >
-          <figure style={{ height: "250px" }} className="overflow-hidden">
+          <figure className="overflow-hidden">
             <img
               className="w-100  proImg"
               src={pro.images[0].secure_url}
