@@ -209,7 +209,7 @@ export default function Home() {
       const {data} = await axios.post(`${process.env.REACT_APP_APIBASEURL}/products/search-image` , formData);
       $('#imageAndTextDetectionLoader').addClass('d-none');
       console.log(data);
-      setTotalPages(data.numOfPages);
+      setTotalPages(1);
       setProduct(data);
       toaster.push(<Message closable showIcon type="success">we find Product of {data.name}</Message> , {placement:'topCenter' , duration:'5000' });
     } catch (error) {
