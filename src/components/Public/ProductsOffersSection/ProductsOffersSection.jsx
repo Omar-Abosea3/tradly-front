@@ -66,10 +66,10 @@ export default function ProductsOffersSection() {
                       alt={pro.title}
                     />
                     <figcaption className="py-2 position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center align-content-center px-5 flex-wrap bg-black bg-opacity-25">
-                      <h2 className="ProTitle fs-1 w-100 text-truncate">
+                      <h2 className="ProTitle fs-1 w-100 text-truncate mb-2">
                         This is {pro.title}
                       </h2>
-                      <p className="w-100 text-white fs-5">
+                      <p className="w-100 text-white fs-5  mb-2">
                         {t("public.pastProductPrice")}
                         <span className="text-decoration-line-through text-danger">
                           {pro.price}

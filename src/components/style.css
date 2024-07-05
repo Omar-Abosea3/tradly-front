@@ -629,6 +629,15 @@ nav {
   .filtersContainerparent {
     width: 100%;
   }
+  .paginationBtn {
+    padding: 8px;
+    font-size: 0.7rem;
+    border-radius: 6px;
+  }
+  .pageNumber {
+    margin: 0px 10px;
+    font-size: 16px;
+  }
 }
 @media screen and (max-width: 320px) {
   .productFontSize h3, .productFontSize h4, .productFontSize h2 {

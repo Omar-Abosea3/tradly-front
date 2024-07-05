@@ -13,11 +13,6 @@ export default function CategoriesSection() {
         try {
             const {data} = await axios.get(`${process.env.REACT_APP_APIBASEURL}/categories`);
             setallCategories(data.categories);
-            const categoriesData = [];
-            data.categories.map((item) => {
-                categoriesData.push({_id:item._id , name:item.name});
-            });
-            localStorage.setItem('categories' , JSON.stringify(categoriesData));
         } catch (error) {
             console.log(error);
         }
@@ -28,7 +23,7 @@ export default function CategoriesSection() {
     },[])
   return (
     <>
-      <div className="row px-3 gx-1 gy-1">
+      <div className="row px-lg-3 px-md-1 px-0 gx-1 gy-1">
         <h3 className='mb-3 titleFontSize'><i className="bi bi-collection"></i> {t('public.allCategories')}</h3>
         {!allCategories
         ? allCatArr.map((item, index) => (

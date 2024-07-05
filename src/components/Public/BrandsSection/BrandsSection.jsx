@@ -51,11 +51,6 @@ export default function BrandsSection() {
             const {data} = await axios.get(`${process.env.REACT_APP_APIBASEURL}/brands`);
             dispatch(getFavBrandData());
             setallBrands(data.brands);
-            const brandsData = [];
-            data.brands.map((item) => {
-                brandsData.push({_id:item._id , name:item.name});
-            });
-            localStorage.setItem('brands' , JSON.stringify(brandsData));
         } catch (error) {
             console.log(error);
         }
@@ -73,7 +68,7 @@ export default function BrandsSection() {
         }
     },[myfavBrands])
   return <>
-    <div className='row px-3 gx-1 gy-1'>
+    <div className='row px-lg-3 px-md-1 px-0 gx-1 gy-1'>
                 <div className='text-dark mb-3 d-flex justify-content-between align-items-center'>
                         <h3 className='titleFontSize'><i className="bi text-center w-100 bi-shop-window position-relative"></i>  {t('public.Stores')}</h3>
                         <Link to={'/brands'} className='text-decoration-none link-light'><button style={{backgroundColor:'#40C9B4'}} className='btn'>{t('public.seeAll')} <i className={localStorage.getItem('pageDir') === 'rtl'?'bi bi-arrow-left':'bi bi-arrow-right'}></i></button></Link>

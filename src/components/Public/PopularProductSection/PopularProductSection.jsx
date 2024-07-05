@@ -71,7 +71,7 @@ export default function PopularProductSection() {
     },[wishlistProducts]);
   return (
     <>
-      <div className='row gx-2 px-5 my-5 gy-2'>
+      <div className='row gx-2  px-lg-3 px-md-1 px-0 my-5 gy-2'>
       <div className='text-dark mb-3 d-flex justify-content-between align-items-center'>
                     <h3 className='titleFontSize'><i className="bi bi-star"></i> {t('public.PopularProducts')}</h3>
                     
