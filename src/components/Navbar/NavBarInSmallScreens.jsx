@@ -37,7 +37,7 @@ export default function NavBarInSmallScreens({
                     </i>   
                 </Link>
             </Nav.Item>
-            <Nav.Item eventKey="3" title="wishlist">
+            {curUser && <Nav.Item eventKey="3" title="wishlist">
                 <Link  to={'/wishlist'} className='nav-link'>
                     <i className="bi text-center w-100 fs-4 bi-heart position-relative">
                         <div
@@ -48,7 +48,7 @@ export default function NavBarInSmallScreens({
                         </div>       
                     </i>
                 </Link>
-            </Nav.Item>
+            </Nav.Item>}
             <Nav.Item
               eventKey="3"
               title={curUser ? "profile" : "login"}
