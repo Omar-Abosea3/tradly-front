@@ -76,4 +76,56 @@
 
 .langSwitsher {
   cursor: pointer;
+}
+
+.navbarInLargeScreens {
+  box-shadow: 0px 0px 15px #398378;
+}
+
+.navbarInSmailScreans {
+  display: none;
+  background-color: white;
+  position: sticky;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  box-shadow: 0px 0px 15px #398378;
+  z-index: 999999999999;
+}
+.navbarInSmailScreans .navBarLogoInSmallScreen {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #42a587;
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px !important;
+}
+
+@media screen and (max-width: 992px) {
+  .navbarInLargeScreens {
+    display: none;
+  }
+  .navbarInSmailScreans {
+    display: block;
+  }
+}
+@media screen and (max-width: 350px) {
+  .navbarInSmailScreans .navBarLogoInSmallScreen {
+    width: 25px;
+    height: 25px;
+    font-size: 16px !important;
+  }
+  .navbarInSmailScreans .fs-4 {
+    font-size: 14px !important;
+  }
+  .favBrandCounter {
+    width: 12px;
+    height: 12px;
+  }
+  .favBrandCounter .fs-6 {
+    font-size: 8px !important;
+  }
 }/*# sourceMappingURL=style.css.map */

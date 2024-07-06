@@ -54,7 +54,7 @@ export default function ProductsOffersSection() {
               pro.priceAfterDiscount !== pro.price ? (
                 <div
                   key={index}
-                  className="product position-relative overflow-hidden"
+                  className="product product2 position-relative overflow-hidden"
                 >
                   <figure
                     style={{ height: "80vh" }}

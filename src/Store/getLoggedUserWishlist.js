@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import emptyWishlist from '../assets/emptyWishlist.png';
+import emptyWishlist from '../assets/emptyWishlist.svg';
 import $ from 'jquery';
 import Cookies from 'js-cookies'
 
@@ -37,7 +37,7 @@ const getFavProductsSlice = createSlice({
     extraReducers:function(builder){
         builder.addCase(getFavProductsData.fulfilled ,function(state , action){
             console.log(action);
-            if(action.payload === false){
+            if(action.payload === false ){
                 state.wishlistProducts = null;
                 state.wishlistItems = 0;
                 $('#emptyWishlist').html(`<div class="emptyWishlistMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptyWishlist}' alt="Empty Wishlist" /></div>`).addClass('vh-100');

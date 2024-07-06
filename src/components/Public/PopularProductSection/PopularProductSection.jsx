@@ -82,7 +82,15 @@ export default function PopularProductSection() {
             key={index}
             className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3 px-2"
           >
-            <Placeholder.Graph active className='rounded-4' height={450}/>
+            <Placeholder.Graph active height={400} className="rounded-4" width={'100%'} >
+              <Placeholder.Graph className="rounded-4" active height={'40%'} width={'100%'} />
+              <div className="p-1">
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+              </div>
+            </Placeholder.Graph>
           </div> )}
       </Slider>:<Slider {...settings}>
             {allProducts.map((pro, index) =>

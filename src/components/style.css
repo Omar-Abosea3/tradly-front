@@ -1,5 +1,5 @@
 .proBtn {
-  background-color: #33907C;
+  background-color: #30ac9a;
   color: white;
   border: 0px;
   padding: 5px;
@@ -17,7 +17,7 @@
 }
 
 .proBtn5 {
-  background-color: #33907C;
+  background-color: #30ac9a;
   color: white;
   border: 0px;
   padding: 5px;
@@ -172,6 +172,7 @@
   overflow: hidden;
   background-color: white;
   border-radius: 24px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3647058824);
 }
 .product h3, .product h4, .product h6, .product h2 {
   color: black;
@@ -206,8 +207,8 @@
   transform: scale(1.1, 1.1);
 }
 .product .orderPtn {
-  background-color: #bde37f;
-  color: #0f6c14;
+  background-color: rgb(220, 232, 208);
+  color: #1c8062;
   border: 0px;
   padding: 5px;
   font-size: 1.2rem;
@@ -221,6 +222,10 @@
 .product .orderPtn:hover {
   background-color: rgb(212, 212, 212);
   color: #30ac9a;
+}
+
+.product2 {
+  box-shadow: none;
 }
 
 #imageAndTextDetectionLoader {
@@ -278,7 +283,7 @@
 }
 
 .proBtn2 {
-  background-color: #33907C;
+  background-color: #30ac9a;
   color: white;
   border: 0px;
   padding: 5px;
@@ -313,7 +318,7 @@
 
 .paginationBtn {
   background-color: white;
-  color: #398378;
+  color: #30ac9a;
   border: 0px;
   padding: 10px;
   font-size: 1.2rem;
@@ -321,12 +326,12 @@
 }
 .paginationBtn:disabled {
   background-color: rgba(255, 255, 255, 0.549);
-  color: rgba(58, 131, 120, 0.662745098);
+  color: rgba(48, 172, 154, 0.568627451);
 }
 
 .searchInputContainer {
   background-color: #FFFFFF;
-  border: 1px solid #398378 !important;
+  border: 1px solid #30ac9a !important;
 }
 .searchInputContainer input {
   width: 80%;
@@ -351,7 +356,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #398378;
+  background-color: #30ac9a;
   color: white;
   display: flex;
   justify-content: center;
@@ -372,7 +377,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #398378;
+  color: #30ac9a;
   font-size: 24px;
 }
 .dropdown .dropdown-menu {
@@ -554,7 +559,7 @@ nav {
   width: 10px;
 }
 .filtersContainerparent .filtersContainer .filtersTitle {
-  background-color: #33907C;
+  background-color: #30ac9a;
   color: white;
   border-radius: 5px;
   padding: 5px 5px;
@@ -746,7 +751,7 @@ footer .footerInfo h3 {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: #33907C;
+  background-color: #30ac9a;
   color: white;
   display: flex;
   justify-content: center;

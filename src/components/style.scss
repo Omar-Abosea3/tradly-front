@@ -9,7 +9,7 @@
 
     
     .proBtn{
-        background-color: #33907C;
+        background-color: #30ac9a;
         color: white;
         border: 0px;
         padding: 5px;
@@ -22,7 +22,7 @@
         }
     }
     .proBtn5{
-        background-color: #33907C;
+        background-color: #30ac9a;
         color: white;
         border: 0px;
         padding: 5px;
@@ -170,6 +170,7 @@
     overflow: hidden;
     background-color: white;
     border-radius: 24px;
+    box-shadow: 0px 0px 15px #0000005d;
     h3,h4,h6,h2{
         color: black;
     }
@@ -200,8 +201,8 @@
     }
     
     .orderPtn{
-        background-color: #bde37f;
-        color: #0f6c14;
+        background-color: rgb(220, 232, 208);
+        color: #1c8062;
         border: 0px;
         padding: 5px;
         font-size: 1.2rem;
@@ -212,6 +213,9 @@
             color: #30ac9a;
         }
     }
+}
+.product2{
+    box-shadow: none;
 }
 #imageAndTextDetectionLoader{
     z-index: 999999999;
@@ -262,7 +266,7 @@
 }
 
 .proBtn2{
-    background-color: #33907C;
+    background-color: #30ac9a;
     color: white;
     border: 0px;
     padding: 5px;
@@ -290,19 +294,19 @@
 }
 .paginationBtn{
     background-color:  white;
-    color: #398378;
+    color: #30ac9a;
     border: 0px;
     padding: 10px;
     font-size: 1.2rem;
     border-radius: 8px;
     &:disabled{
         background-color: rgba(255, 255, 255, 0.549);
-        color: #3a8378a9;
+        color: #30ac9a91;
     }
 }
 .searchInputContainer{
     background-color: #FFFFFF;
-    border: 1px solid #398378 !important;
+    border: 1px solid #30ac9a !important;
     input{
         width: 80%;
         &:focus{
@@ -320,7 +324,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #398378;
+        background-color: #30ac9a;
         color: white;
         display: flex;
         justify-content: center;
@@ -340,7 +344,7 @@
         background: none;
         border: none;
         cursor: pointer;
-        color: #398378;
+        color: #30ac9a;
         font-size: 24px;
     }
       
@@ -517,7 +521,7 @@ nav{
             width: 10px;
         }
         .filtersTitle{
-            background-color: #33907C;
+            background-color: #30ac9a;
             color: white;
             border-radius: 5px;
             padding: 5px 5px;
@@ -739,7 +743,7 @@ footer{
     width:25px;
     height: 25px;
     border-radius:50%;
-    background-color:#33907C;
+    background-color:#30ac9a;
     color:white;
     display:flex;
     justify-content:center;

@@ -7,7 +7,7 @@ import Cart from './components/Cart/Cart';
 import Login from './components/login/Login';
 import SignUp from './components/SignUp/SignUp';
 import jwtDecode from 'jwt-decode';
-import { useEffect, useState} from 'react';
+import { useEffect, useMemo, useState} from 'react';
 import BrandProducts from './components/Specefic-Products/BrandProducts';
 import ProductDetailes from './components/ProductDetailes/ProductDetailes';
 import Payment from './components/Payment/Payment';
@@ -27,13 +27,17 @@ import StatusPayment from './components/StatusPayment/SuccessPayment';
 import CancelPayment from './components/StatusPayment/CancelPayment';
 import { useTranslation } from 'react-i18next';
 import ProfileData from './components/Profile/ProfileData/ProfileData';
+import { useDispatch } from 'react-redux';
+import { getCartItemsData } from './Store/getLoggedCartItemsSlice';
+
+import { getFavBrandData } from './Store/brandSlice';
+import { getFavProductsData } from './Store/getLoggedUserWishlist';
+import axios from 'axios';
 
 
 export default function App() {
   const [curUser, setcurUser] = useState(null);
-  // const [imageFile, setimageFile] = useState(null);
-  // const [textFile, settextFile] = useState(null);
-  // const [textSearch, settextSearch] = useState(' ');
+  const dispatch = useDispatch();
   const {i18n} = useTranslation();
   const setDirection = (direction) => {
     document.documentElement.dir = direction;
@@ -54,10 +58,19 @@ export default function App() {
     setcurUser(userData);
   }
   
-  function clearUserData(){
-    Cookies.removeItem('tkn1');
-    localStorage.removeItem('userData');
-    setcurUser(null);
+  async function clearUserData(){
+    try {
+      const {data} = await axios(`${process.env.REACT_APP_APIBASEURL}/user/logout` , {
+        headers:{
+          bearertoken : Cookies.getItem('token')
+        }
+      });
+      Cookies.removeItem('token');
+      localStorage.removeItem('userData');
+      setcurUser(null);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(function () {
@@ -65,6 +78,11 @@ export default function App() {
       getUserData();
     }
   }, []);
+  const globalMemo = useMemo(()=>{
+    dispatch(getCartItemsData());
+    dispatch(getFavProductsData());
+    dispatch(getFavBrandData());
+  },[curUser])
   useEffect(() => {
     document.body.className = i18n.language;
   },[i18n.language])
@@ -114,7 +132,7 @@ export default function App() {
       {path:'brands',element:<Brands/>},
       {path:'subcategories/:id',element:<SubCategoryProducts/>},
       {path:'wishlist' , element:<ProtectedRoutes><WishlistProducts/></ProtectedRoutes>},
-      {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData}/></ProtectedRoutes> , children:[
+      {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData} changeLanguage={changeLanguage}/></ProtectedRoutes> , children:[
         {path:'',element:<ProfileData/>},
       ]},
       {path:'brands/:id',element:<BrandProducts/>},

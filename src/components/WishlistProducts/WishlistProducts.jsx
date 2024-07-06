@@ -4,7 +4,7 @@ import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import LodingScrean from '../loadingScreen/LodingScrean';
 import AddToWishlistBtn from '../Buttons/AddToWishlistBtn';
 import { Link, useNavigate } from 'react-router-dom';
-import emptyWishlist from '../../assets/emptyWishlist.png'
+import emptyWishlist from '../../assets/emptyWishlist.svg'
 import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import $ from 'jquery';

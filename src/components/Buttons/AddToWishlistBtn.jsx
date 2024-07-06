@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFavProductsData } from "../../Store/getLoggedUserWishlist";
 import { useNavigate } from "react-router-dom";
 import Cookies from "../../../node_modules/js-cookies/src/cookies";
+import { Message, toaster } from "rsuite";
 
 export default function AddToWishlistBtn(props) {
     const {id , classes ,removeKey , page} = props;
@@ -22,11 +23,7 @@ export default function AddToWishlistBtn(props) {
         //    $(`#addWishList${productId}`).removeClass('bi-heart').addClass('text-danger bi-heart-fill');
         } catch (error) {
             $(`#addWishList${productId}`).addClass('bi-heart').removeClass('text-danger bi-heart-fill');
-            $('.UnAuthMsg').slideDown(500 , function(){
-                setTimeout(() => {
-                    $('.UnAuthMsg').slideUp(500);
-                }, 2000);
-            })
+            toaster.push(<Message closable showIcon type="error">you must login first .</Message> , {placement:'topCenter' , duration:'1500'});
             console.log(error);
         }
     }

@@ -12,7 +12,15 @@ export default function ProductCardLoading() {
             key={i}
             className="col-6  position-relative producInWideScreen text-white col-sm-4 col-md-3"
           >
-            <Placeholder.Graph active height={450} className="rounded-4" width={'100%'} />
+            <Placeholder.Graph active height={400} className="rounded-4" width={'100%'} >
+              <Placeholder.Graph className="rounded-4" active height={'40%'} width={'100%'} />
+              <div className="p-1">
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+                <Placeholder.Paragraph active color="black"/>
+              </div>
+            </Placeholder.Graph>
           </div>
         );
       }

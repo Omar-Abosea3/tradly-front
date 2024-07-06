@@ -15,23 +15,11 @@ export async function addToCartFunction(id , quantity = 1){
             },
           }
         );
-        if (data.message === "success") {
-            console.log('success');
-            $('.sucMsg').slideDown(500, function () {
-                setTimeout(() => {
-                    $('.sucMsg').slideUp(500);
-                }, 2000);
-            })
-            toaster.push(<Message closable showIcon type="success">product added to cart successfully !</Message>)
-            return true;
-        }
+        toaster.push(<Message closable showIcon type="success">product added to cart successfully .</Message> , {placement:'topCenter' , duration:'1500'});
+        return true;
       } catch (error) {
         console.log(error);
-          $(".notLogin").slideDown(500, function () {
-            setTimeout(() => {
-              $(".notLogin").slideUp(500);
-            }, 2000);
-          });
+        toaster.push(<Message closable showIcon type="error">you must login first .</Message> , {placement:'topCenter' , duration:'1500'});
         return false;
       }
 }

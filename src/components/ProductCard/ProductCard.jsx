@@ -7,6 +7,7 @@ import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import { useDispatch } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import { useTranslation } from 'react-i18next';
+import { Message, toaster } from 'rsuite';
 
 export default function ProductCard({pro , page , favIds}) {
     const navigate = useNavigate();
@@ -14,7 +15,10 @@ export default function ProductCard({pro , page , favIds}) {
     const {i18n} = useTranslation()
     async function addingToCart(id){
         if(!Cookies.getItem('token')){
-            navigate('/login');
+            toaster.push(<Message closable showIcon type="error">you must login first .</Message> , {placement:'topCenter' , duration:'1500'});
+            setTimeout(() => {
+              navigate('/login');
+            },1500)
         }else{
             await addToCartFunction(id);
             dispatch(getCartItemsData());

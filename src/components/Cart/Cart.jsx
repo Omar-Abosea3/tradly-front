@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo } from 'react';
 import LodingScrean from '../loadingScreen/LodingScrean';
-import emptycart from '../../assets/your-cart-is-empty.png';
+import emptycart from '../../assets/your-cart-is-empty.svg';
 
 import $ from 'jquery';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +8,10 @@ import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import Cookies from 'js-cookies';
 import CartItemCard from './CartItemCard';
 import PaymentMethods from './PaymentMethods';
+import { Message, toaster } from 'rsuite';
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -71,25 +71,23 @@ export default function Cart() {
 
 
   async function checkQuantity( id , counter ,product2){
-      if(product2.stok === product2.quantity){
+      if(product2.stok < product2.quantity){
         $('.quantityNotEnough').fadeIn(500);
       }else{
         $('.quantityNotEnough').fadeOut(500);
         if(await increamentCounter(id , counter) === true){
-          dispatch(getCartItemsData());
+          console.log('incremented');
         }
       }
 
   }
   async function checkQuantity2(id, counter, product2) {
     $(`#loadingIcon${id}`).fadeIn(300);
-    if (product2.stok === product2.quantity && await decreamentCounter(id, counter) === true) {
-      $('.quantityNotEnough').fadeOut(500);
-    } else if (product2.stok === 1) {
+    if (product2.quantity === 1) {
       $(`#loadingIcon${id}`).fadeOut(300);
       removeFromCart(id);
     } else if ( await decreamentCounter(id, counter) === true) {
-      dispatch(getCartItemsData());
+      console.log('decremented');
     }
 
   }
@@ -104,11 +102,12 @@ export default function Cart() {
             },
             headers: { bearertoken: Cookies.getItem("token") },
           });
-          
-            dispatch(getCartItemsData(id));
+          $(`#removeBtn${id}`).html(`Remove Product <i class="bi bi-cart-dash-fill"></i>`);
+            dispatch(getCartItemsData());
             setTimeout(() => {
               $('#imPortantLayer').addClass('d-none');
             }, 1500);
+            console.log(myCartItems);
             if(myCartItems.length === 1 || !myCartItems.length){
               navigate('/home')
             }
@@ -136,11 +135,8 @@ export default function Cart() {
 
         if (data.message === "cart deleted success") {
           navigate('/home');
-          $('.emptyCart').slideDown(500 , function(){
-            setTimeout(() => {
-              $('.emptyCart').slideUp(500)
-            }, 1500);
-          })
+          localStorage.removeItem('cartId');
+          toaster.push(<Message showIcon closable type='info'>Your cart is empty now </Message> , {placement:'bottomCenter' , duration:'5000'});
         }
       } catch (error) {
         console.log(error);
@@ -148,14 +144,9 @@ export default function Cart() {
     }
   
 
-  const memo = useMemo(function(){
-    dispatch(getFavProductsData());
-    if(!myCartItems){
+    useEffect(() => {
       dispatch(getCartItemsData());
-      $('#emptyCart').html(`<div class="emptyCartMsg pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptycart}' alt="Empty Cart" /></div>`).addClass('vh-100'); 
-    }
-    console.log(myCartItems);
-},[myCartItems])
+    },[]);
 
 
 

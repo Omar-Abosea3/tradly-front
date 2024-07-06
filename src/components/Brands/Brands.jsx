@@ -1,21 +1,21 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import LodingScrean from '../loadingScreen/LodingScrean';
 import { Link } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import { Helmet } from 'react-helmet';
+import BrandCard from './BrandCard/BrandCard';
 
 export default function Brands() {
-
-
+  const [favBrand, setfavBrand] = useState(null);
+  const myfavBrands = useSelector((state) => state.favBrands.favBrands);
   // https://route-ecommerce.onrender.com/api/v1/brands
   const [Brand, setBrand] = useState(null);
   async function getBrand() {
     try {
-      let { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/brands');
-      setBrand(data.data);
-      console.log(Brand);
+      let { data } = await axios.get(`${process.env.REACT_APP_APIBASEURL}/brands`);
+      setBrand(data.brands);;
     } catch (error) {
       console.log(error);
     }
@@ -25,6 +25,16 @@ export default function Brands() {
     getBrand();
     dispatch(getCartItemsData());
   }, [])
+  
+  const memo2 = useMemo(() => {
+    const brandIds=[];
+    if(myfavBrands != null){
+        myfavBrands.map((brand) => brandIds.push(brand._id));
+        setfavBrand(brandIds);
+    }else{
+        setfavBrand(brandIds);
+    }
+},[myfavBrands])
 
   return <>
     <Helmet>
@@ -41,10 +51,7 @@ export default function Brands() {
         </div>
         {Brand.map((brand, index) => <div key={index} className="col-6 col-sm-4 producInWideScreen text-center col-md-3">
           <Link className='text-decoration-none px-2 text-primary' to={`/brands/${brand._id}`}>
-            <div className="brandBox shadow-lg">
-              <img className='w-100' src={brand.image} alt={brand.name} />
-              <h5 className='BrandTitle py-1'>{brand.name}</h5>
-            </div>
+            <BrandCard brand={brand} favBrand={favBrand}/>
           </Link>
         </div>)}
       </div>

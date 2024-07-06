@@ -12,7 +12,7 @@ export default function BrandCard({brand , favBrand , home}) {
             </figure>
         </Link>
         <figcaption>
-            {!home&&<h3>{brand.name}</h3>}
+            {!home&&<h3 className='text-white'>{brand.name}</h3>}
             {favBrand.includes(brand._id) ? <UnfollowBtn id={brand._id}/>:<FollowBtn id={brand._id} />}
         </figcaption>
      

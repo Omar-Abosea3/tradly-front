@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 import ProfileAsideNav from './ProfileAsideNav/ProfileAsideNav';
 import './style.css';
 import { Outlet } from 'react-router-dom';
-export default function Profile({clearUserData}) {
+export default function Profile({clearUserData , changeLanguage}) {
     const [userData, setuserData] = useState(null);
 
     useLayoutEffect(() => {
@@ -22,7 +22,7 @@ export default function Profile({clearUserData}) {
       </Helmet>
         <div className="row gx-0">
             <div className="col-2">
-                <ProfileAsideNav/>
+                <ProfileAsideNav changeLanguage={changeLanguage} clearUserData={clearUserData}/>
             </div>
             <div className="col-10">
                 <div id='profileContentBox' className='px-2'>
