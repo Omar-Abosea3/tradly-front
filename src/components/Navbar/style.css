@@ -90,7 +90,7 @@
   right: 0px;
   left: 0px;
   box-shadow: 0px 0px 15px #398378;
-  z-index: 999999999999;
+  z-index: 1000;
 }
 .navbarInSmailScreans .navBarLogoInSmallScreen {
   width: 40px;
