@@ -1,5 +1,5 @@
 
-import noProducts from "../../assets/EmptyPtoducts.png";
+import noProducts from "../../assets/EmptyPtoducts.svg";
 
 export default function NoProducts() {
   return <>

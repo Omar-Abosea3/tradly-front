@@ -5,7 +5,7 @@ import LodingScrean from '../loadingScreen/LodingScrean';
 import $ from 'jquery';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
-import emptyOrder from '../../assets/EmptyPtoducts.png';
+import emptyOrder from '../../assets/EmptyPtoducts.svg';
 import { Helmet } from 'react-helmet';
 import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
 import AddToWishlistBtn from '../Buttons/AddToWishlistBtn';

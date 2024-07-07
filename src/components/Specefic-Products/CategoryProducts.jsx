@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect , useMemo, useState } from 'react'
 import { Link , useParams } from 'react-router-dom';
 import LodingScrean from '../loadingScreen/LodingScrean';
-import emptyOrder from '../../assets/EmptyPtoducts.png';
+import emptyOrder from '../../assets/EmptyPtoducts.svg';
 import { Helmet } from 'react-helmet';
 import Slider from 'react-slick';
 import ProductCard from '../ProductCard/ProductCard';
