@@ -29,6 +29,7 @@ import ProfileData from './components/Profile/ProfileData/ProfileData';
 import { useDispatch } from 'react-redux';
 import { getCartItemsData } from './Store/getLoggedCartItemsSlice';
 import Error404Page from './assets/error_404.svg';
+import noNetwork from './assets/Network-error.svg';
 import { getFavBrandData } from './Store/brandSlice';
 import { getFavProductsData } from './Store/getLoggedUserWishlist';
 import axios from 'axios';
@@ -167,7 +168,7 @@ export default function App() {
       <Offline>
         <div className='vh-100 d-flex justify-content-center align-items-center'>
             <figure className='w-50 text-center'>
-               <img className='w-25 mb-3' src={require('./assets/Network-error.png')} alt='offline' loading='lazy'/>
+               <img className='w-50 mb-3' src={noNetwork} alt='offline' loading='lazy'/>
                <h3>your network is not stable</h3>
             </figure>  
         </div>
