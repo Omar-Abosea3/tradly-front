@@ -47,9 +47,7 @@ export default function Brands() {
           </div>
         </div>
         {Brand.map((brand, index) => <div key={index} className="col-6 col-sm-4 producInWideScreen text-center col-md-3">
-          <Link className='text-decoration-none px-2 text-primary' to={`/brands/${brand._id}`}>
             <BrandCard brand={brand} favBrand={favBrand}/>
-          </Link>
         </div>)}
       </div>
     </div>}
