@@ -38,7 +38,7 @@ export default function NavBarInSmallScreens({
                 </Link>
             </Nav.Item>
             {curUser && <Nav.Item eventKey="3" title="wishlist">
-                <Link  to={'/wishlist'} className='text-decoration-none text-black'>
+                <Link  to={'/profile/wishlist'} className='text-decoration-none text-black'>
                     <i className="bi text-center w-100 fs-4 bi-heart position-relative">
                         <div
                           style={{ left: "50%" }}
