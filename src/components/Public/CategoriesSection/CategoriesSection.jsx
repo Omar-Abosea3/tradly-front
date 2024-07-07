@@ -34,15 +34,14 @@ export default function CategoriesSection() {
         : allCategories.map((item) => (
             <div key={item._id} className="col-lg-3 col-md-4 col-6">
               <Link
-                to={`/${item._id}`}
+                to={`category/${item._id}`}
                 className="text-decoration-none link-light"
               >
                 <figure
-                  style={{ height: "300px" }}
                   className="position-relative mb-0 overflow-hidden"
                 >
                   <img
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain" , aspectRatio:'2/1'}}
                     src={item.image.secure_url}
                     alt={item.name}
                     className="w-100 h-100"

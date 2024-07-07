@@ -10,7 +10,7 @@ export default function FollowBtn(props) {
     async function followStore(brandId){
         console.log(myfavBrands)
         const decodedToken = Cookies.getItem('token');
-        $(`#${id}`).html('<i class="fa-solid fa-beat fa-ellipsis"></i>');
+        $(`#brand${id}`).html('<i class="fa-solid fa-beat fa-ellipsis"></i>');
         try {
             console.log(decodedToken);
             const { data } = await axios.post(`${process.env.REACT_APP_APIBASEURL}/wishlist?brandId=${brandId}`, {}, {
@@ -20,10 +20,10 @@ export default function FollowBtn(props) {
             });
             
             console.log(data);
-            $(`#${id}`).html('Following <i class="bi bi-check-lg"></i>');
+            $(`#brand${id}`).html('Following <i class="bi bi-check-lg"></i>');
             dispatch(getFavBrandData());
         } catch (error) {
-            $(`#${id}`).html('Follow');
+            $(`#brand${id}`).html('Follow');
             console.log(error);
             $('#errMsg11').slideDown(500 , function(){
                 setTimeout(() => {
@@ -35,6 +35,6 @@ export default function FollowBtn(props) {
 
   return <>
   
-    <button id={id} onClick={(e)=>{followStore(id)}} >Follow</button>
+    <button id={`brand${id}`} onClick={(e)=>{followStore(id)}} >Follow</button>
   </>
 }

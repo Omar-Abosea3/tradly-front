@@ -6,6 +6,8 @@ import profilePlaceholder from '../../../assets/profilePlaceholder.jpeg';
 import { useTranslation } from 'react-i18next';
 import $ from 'jquery';
 import { toast } from 'react-toastify';
+import LodingScrean from '../../loadingScreen/LodingScrean';
+import { Message, toaster } from 'rsuite';
 export default function ProfileData() {
     const [profileData, setProfileData] = useState(null);
     const [ProfileImage, setProfileImage] = useState(profilePlaceholder);
@@ -40,9 +42,10 @@ export default function ProfileData() {
                     bearertoken:Authorization,
                 }
             });
-            
+            toaster.push(<Message closable showIcon type='success'>Editid Successfully!</Message> , {placement:'topCenter' , duration:'1500'});
             setProfileImage(data.user.profile_pic.secure_url);
         } catch (error) {
+            toaster.push(<Message closable showIcon type='error'>editing faild try again !</Message> , {placement:'topCenter' , duration:'1500'});
             console.log(error);
         }
     }
@@ -55,7 +58,7 @@ export default function ProfileData() {
             editData.firstName = $('#profileFirstName').val();
         }if(profileData?.lastName !== $('#profileLastName').val()){
             editData.lastName = $('#profileLastName').val();
-        }if(profileData?.age !== $('#profileAge').val()){
+        }if(profileData?.age !== parseInt($('#profileAge').val())){
             editData.age = $('#profileAge').val();
         }if(profileData?.phone !== $('#profilePhone').val()){
             editData.phone = $('#profilePhone').val();
@@ -68,11 +71,13 @@ export default function ProfileData() {
             });
             console.log(data);
             getProfileData();
-            toast.success('Data Edited Successfully ');
+            toaster.push(<Message closable showIcon type='success'>Editid Successfully!</Message> , {placement:'topCenter' , duration:'1500'});
             $('#successEditBtn').html("save");
             hideEditLayer()
         } catch (error) {
             $('#successEditBtn').html("save");
+            toaster.push(<Message closable showIcon type='error'>editing faild try again !</Message> , {placement:'topCenter' , duration:'1500'});
+
             console.log(error);
             toast.error('Data Editing Failed ! , please check data and try again');
         }
@@ -91,7 +96,7 @@ export default function ProfileData() {
     },[])
   return (
     <>
-      <div id="profileDataPage">
+      {profileData &&  <div id="profileDataPage">
         <div className="d-flex justify-content-center align-items-center mb-4">
           <figure>
             <img src={ProfileImage} alt="profile" />
@@ -217,7 +222,8 @@ export default function ProfileData() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
+      {!profileData && <LodingScrean/>}
     </>
   );
 }

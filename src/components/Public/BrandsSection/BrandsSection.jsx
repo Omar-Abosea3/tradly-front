@@ -77,7 +77,7 @@ export default function BrandsSection() {
                       {!allBrands?allBrandsArr.map((item) => <div key={item._id} className='col-lg-3 col-md-4 col-6 px-2'>
                           <Placeholder.Graph  active height={250} className='rounded-3'>
                             <div className='p-3 text-center'>
-                                <Placeholder.Graph  active height={30} width={30} style={{borderRadius:'50%'}} className='m-auto' />
+                                <Placeholder.Graph  active height={60} width={60} style={{borderRadius:'50%'}} className='m-auto' />
                                 <Placeholder.Paragraph  active  className='m-auto' />
                             </div>
                           </Placeholder.Graph>

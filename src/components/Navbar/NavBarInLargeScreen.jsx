@@ -46,19 +46,14 @@ export default function NavBarInLargeScreen({
                       <span className="text-center w-100"> Home</span>
                     </Link>
                   </li>
-
                   <li className="nav-item">
                     <Link
-                      to={"/fav-stors"}
+                      to={"/brands"}
                       className="nav-link active d-flex flex-wrap justify-content-center align-items-center align-content-center"
                       aria-current="page"
                     >
-                      <i className="bi text-center w-100 fs-4 bi-shop-window position-relative">
-                        <div className="favBrandCounter position-absolute bottom-50 start-50">
-                          <span className="fs-6">{numOfFavStors}</span>
-                        </div>
-                      </i>
-                      <span className="text-center w-100">Fav Stors</span>
+                      <i className="bi text-center w-100 fs-4 bi-shop-window position-relative"></i>
+                      <span className="text-center w-100"> Brands</span>
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -77,7 +72,7 @@ export default function NavBarInLargeScreen({
                   </li>
                   <li className="nav-item">
                     <Link
-                      to={"/wishlist"}
+                      to={"/profile/wishlist"}
                       className="nav-link d-flex flex-wrap justify-content-center align-items-center align-content-center"
                     >
                       <i className="bi text-center w-100 fs-4 bi-heart position-relative">
@@ -92,17 +87,7 @@ export default function NavBarInLargeScreen({
                       <span className="text-center w-100">Wishlist</span>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link
-                      to={"/allorders"}
-                      className="nav-link d-flex flex-wrap justify-content-center align-items-center align-content-center"
-                    >
-                      <i className="bi text-center w-100 fs-4 bi-bag position-relative">
-                        {" "}
-                      </i>
-                      <span className="text-center w-100">All Orders</span>
-                    </Link>
-                  </li>
+
                 </ul>
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li className="nav-item">

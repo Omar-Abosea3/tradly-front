@@ -21,10 +21,10 @@ export default function Profile({clearUserData , changeLanguage}) {
           <title>Profile</title>
       </Helmet>
         <div className="row gx-0">
-            <div className="col-2">
+            <div className="col-lg-1 col-md-1 col-12">
                 <ProfileAsideNav changeLanguage={changeLanguage} clearUserData={clearUserData}/>
             </div>
-            <div className="col-10">
+            <div className="col-lg-11 col-md-11 col-12">
                 <div id='profileContentBox' className='px-2'>
                     <Outlet/>
                 </div>

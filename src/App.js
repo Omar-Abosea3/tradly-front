@@ -18,7 +18,6 @@ import WishlistProducts from './components/WishlistProducts/WishlistProducts';
 import CategoryProducts from './components/Specefic-Products/CategoryProducts';
 import SubCategoryProducts from './components/Specefic-Products/SubCategoryProducts';
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
-import VerifyUser from './components/ForgetPassword/VerifyUser';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import Profile from './components/Profile/Profile';
 import { Online , Offline } from 'react-detect-offline';
@@ -29,10 +28,13 @@ import { useTranslation } from 'react-i18next';
 import ProfileData from './components/Profile/ProfileData/ProfileData';
 import { useDispatch } from 'react-redux';
 import { getCartItemsData } from './Store/getLoggedCartItemsSlice';
-
+import Error404Page from './assets/error_404.svg';
 import { getFavBrandData } from './Store/brandSlice';
 import { getFavProductsData } from './Store/getLoggedUserWishlist';
 import axios from 'axios';
+import FavStors from './components/FavStors/FavStors';
+import GenerateOTP from './components/GenerateOTP/GenerateOTP';
+import ConfirmEmail from './components/Brands/BrandCard/ConfirmEmail/ConfirmEmail';
 
 
 export default function App() {
@@ -67,6 +69,7 @@ export default function App() {
       });
       Cookies.removeItem('token');
       localStorage.removeItem('userData');
+      console.log(data);
       setcurUser(null);
     } catch (error) {
       console.log(error);
@@ -82,7 +85,7 @@ export default function App() {
     dispatch(getCartItemsData());
     dispatch(getFavProductsData());
     dispatch(getFavBrandData());
-  },[curUser])
+  },[curUser]);
   useEffect(() => {
     document.body.className = i18n.language;
   },[i18n.language])
@@ -127,28 +130,30 @@ export default function App() {
   const router = createHashRouter([
     {path:'',element:<Layout  changeLanguage={changeLanguage} setDirection={setDirection} curUser={curUser} clearUserData={clearUserData} />,children:[
       {path:'',element:<Public/>},
-      {path:'/:id',element:<CategoryProducts/>},
+      {path:'category/:id',element:<CategoryProducts/>},
       {path:'home',element:<Home />},
       {path:'brands',element:<Brands/>},
-      {path:'subcategories/:id',element:<SubCategoryProducts/>},
-      {path:'wishlist' , element:<ProtectedRoutes><WishlistProducts/></ProtectedRoutes>},
+      {path:'subcategories/:id',element:<SubCategoryProducts/>}, 
       {path:'profile' , element:<ProtectedRoutes><Profile clearUserData={clearUserData} changeLanguage={changeLanguage}/></ProtectedRoutes> , children:[
         {path:'',element:<ProfileData/>},
+        {path:'wishlist' , element:<ProtectedRoutes><WishlistProducts/></ProtectedRoutes>},
+        {path:'fav-stors' , element:<ProtectedRoutes><FavStors/></ProtectedRoutes>},
+        {path:'orders',element:<ProtectedRoutes><MyOrders curUser={curUser} /></ProtectedRoutes>},
       ]},
       {path:'brands/:id',element:<BrandProducts/>},
       {path:'product-detailes/:id',element:<ProductDetailes/>},
       {path:'cart',element:<ProtectedRoutes><Cart/></ProtectedRoutes>},
       {path:'payment',element:<ProtectedRoutes><Payment/></ProtectedRoutes>},
-      {path:'allorders',element:<ProtectedRoutes><MyOrders curUser={curUser} /></ProtectedRoutes>},
       {path:'login',element:<ProtectedRoutes2><Login getUserData={getUserData}/></ProtectedRoutes2>},
       {path:'signup',element:<ProtectedRoutes2><SignUp/></ProtectedRoutes2>},
+      {path:'generate-otp',element:<ProtectedRoutes2><GenerateOTP/></ProtectedRoutes2>},
+      {path:'confirm-email',element:<ProtectedRoutes2><ConfirmEmail/></ProtectedRoutes2>},
       {path:'forgetpassword',element:<ProtectedRoutes2><ForgetPassword/></ProtectedRoutes2>},
-      {path:'forgetpassword/verifycode',element:<ProtectedRoutes2><VerifyUser/></ProtectedRoutes2>},
       {path:'resetpassword',element:<ProtectedRoutes2><ResetPassword/></ProtectedRoutes2>},
       {path:'payment-success/:ordertoken',element:<StatusPayment/>}, 
       {path:'payment-cancel/:ordertoken',element:<CancelPayment/>}, 
       
-      {path:'*',element:<div className='vh-100 d-flex py-5 my-5 justify-content-center align-items-center text-black'><img className='w-75' src={require('./assets/error 404.jpg')} alt='error'/>  </div>},
+      {path:'*',element:<div className='vh-100 d-flex  justify-content-center align-items-center text-black'><img className='w-25' src={Error404Page} alt='error'/>  </div>},
     ]}
   ])
 

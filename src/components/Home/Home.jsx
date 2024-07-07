@@ -225,18 +225,7 @@ export default function Home() {
     closeFilters();
   }
   const resetFilters = async () => {
-    const inputs = document.querySelectorAll('.filtersContainerparent input');
-    const inputsArray = Array.from(inputs);
-    inputsArray.map((ele) => {
-      ele.checked = false;
-    });
-    setbrandsId([]);
-    setcategoriesId([]);
-    setmyFilters({});
-    setCurrentPage(1);
-    setFilters({});
-    closeFilters();
-    // window.location.reload();
+    window.location.reload();
   }
   const handlePrevPage = () => {
     if (currentPage > 1) {

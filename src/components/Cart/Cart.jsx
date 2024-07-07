@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect} from 'react';
 import LodingScrean from '../loadingScreen/LodingScrean';
-import emptycart from '../../assets/your-cart-is-empty.svg';
-
 import $ from 'jquery';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
@@ -20,9 +18,6 @@ export default function Cart() {
     return store.getCartItemSlice.CartProducts;
   })
 
-  const myNumCartItems = useSelector(function(store){
-    return store.getCartItemSlice.cartItems;
-  })
 
   const myTotalCartPrice = useSelector(function(store){
     return store.getCartItemSlice.TotalCartPrice;
@@ -111,15 +106,12 @@ export default function Cart() {
             if(myCartItems.length === 1 || !myCartItems.length){
               navigate('/home')
             }
-            $('.RemoveMsg').slideDown(500,function(){
-              setTimeout(() => {
-                $('.RemoveMsg').slideUp(500);
-              }, 1500);
-            })
+            toaster.push(<Message closable showIcon type='info'>product has been removed from cart successfully !</Message> , {placement:'bottomCenter' , duration:'1500'});
         
         } catch (error) {
           $('#imPortantLayer').addClass('d-none');
           $(`#removeBtn${id}`).html(`Remove Product <i class="bi bi-cart-dash-fill"></i>`);
+          toaster.push(<Message closable showIcon type='error'>faild in removing product</Message> , {placement:'bottomCenter' , duration:'1500'});
           console.log(error);
         }
           
@@ -136,6 +128,7 @@ export default function Cart() {
         if (data.message === "cart deleted success") {
           navigate('/home');
           localStorage.removeItem('cartId');
+          dispatch(getCartItemsData());
           toaster.push(<Message showIcon closable type='info'>Your cart is empty now </Message> , {placement:'bottomCenter' , duration:'5000'});
         }
       } catch (error) {
@@ -198,7 +191,7 @@ export default function Cart() {
                 ))}
                 <button
                   onClick={function () {
-                    $('#PaymentMethodsLayer').css('display' , 'flex');
+                    $(`#PaymentMethodsLayer${localStorage.getItem('cartId')}`).css('display' , 'flex');
                   }}
                   className=" proBtn5 rounded-0 w-100"
                 >
@@ -209,7 +202,7 @@ export default function Cart() {
           </>
         )}
       </div>
-      <PaymentMethods/>
+      <PaymentMethods productId={localStorage.getItem('cartId')}/>
     </>
   );
 }

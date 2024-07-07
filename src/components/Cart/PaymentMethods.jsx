@@ -1,19 +1,20 @@
 import axios from 'axios';
 import Cookies from 'js-cookies';
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { Message, toaster } from 'rsuite';
 import './style.css';
-import LoadingImageAndTextAPI from '../Home/LoadingImageAndTextAPI';
-export default function PaymentMethods() {
+import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
+import { useDispatch } from 'react-redux';
+import $ from 'jquery';
+import { useNavigate } from 'react-router-dom';
+export default function PaymentMethods({page , productId}) {
     const [payMethod, setpayMethod] = useState('cash');
-    const navigate = useNavigate();
     const changePaymentMethod = (method) => {
         setpayMethod(method)
     };
-
+    const dispatch = useDispatch();
+    const navigate= useNavigate();
     const payNow = async () => {
-        document.getElementById('imageAndTextDetectionLoader').classList.remove('d-none');
         const cartId = localStorage.getItem('cartId');
         const orderData = {
             "address":document.getElementById('address').value,
@@ -31,21 +32,65 @@ export default function PaymentMethods() {
                     bearertoken:Cookies.getItem('token')
                 }
             });
-            document.getElementById('imageAndTextDetectionLoader').classList.add('d-none');
             console.log(data);
-            window.open(data.checkOutLink)
-            navigate('/');
+            dispatch(getCartItemsData());
+            if(data.checkOutLink){
+              window.open(data.checkOutLink , '_self');
+            }else{
+              navigate('/profile/orders');
+            }
+            
         } catch (error) {
-            document.getElementById('imageAndTextDetectionLoader').classList.add('d-none');
             console.log(error);
-            toaster.push(<Message closable showIcon type='error'>order not completed try again</Message> , {placement:'topCenter' , duration:'5000'})
+            toaster.push(<Message closable showIcon type='error'>order not completed try again</Message> , {placement:'topCenter' , duration:'5000'});
         }
+    }
+
+    const orderProduct = async (id) => {
+      const orderData = {
+        "address":document.getElementById('address').value,
+        "phoneNumbers":[
+            document.getElementById('phoneNumber1').value,
+            document.getElementById('phoneNumber2').value
+        ],
+        "paymentMethod":payMethod,
+        "city":document.getElementById('city').value,
+        "state":document.getElementById('State').value
+      }
+      try {
+        const {data} = await axios.post(`${process.env.REACT_APP_APIBASEURL}/order${id}` , orderData , {
+          headers:{
+            bearertoken:Cookies.getItem('token')
+          }
+        });
+        if(data.checkOutLink){
+          window.open(data.checkOutLink , '_self');
+        }
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+        toaster.push(<Message closable showIcon type='error'>order not completed try again</Message> , {placement:'topCenter' , duration:'5000'});
+      }
+    }
+    const handlePay = async () => {
+      document.getElementById('payBtn').innerHTML = '<i class="fa-solid fa-beat fa-ellipsis"></i>';
+      if(!page){
+        await payNow();
+      }else{
+        await orderProduct(productId);
+      }
+      document.getElementById('payBtn').innerHTML = '<i className="bi bi-cash-coin"></i> Puy Now';
+    }
+    const closeLayer = () => {
+      $(`#PaymentMethodsLayer${productId}`).fadeOut(500);
     }
   return (
     <>
-    <LoadingImageAndTextAPI/>
-      <div id="PaymentMethodsLayer">
-        <div id="PaymentForm">
+      <div id={`PaymentMethodsLayer${productId}`}  className="PaymentMethodsLayer">
+        <div className='position-relative PaymentForm'>
+          <div className='position-absolute top-0 end-0 p-3'>
+            <i style={{cursor:'pointer'}} onClick={closeLayer} className='bi bi-x fs-3'></i>
+          </div>
           <figure className="mb-3 text-center">
             <img
               className="w-50"
@@ -111,7 +156,7 @@ export default function PaymentMethods() {
             </div>
 
             <div>
-                <button onClick={payNow} className='btn proBtn w-100'><i className="bi bi-cash-coin"></i> Puy Now</button>
+                <button id='payBtn' onClick={handlePay} className='btn proBtn w-100'><i className="bi bi-cash-coin"></i> Puy Now</button>
             </div>
           </div>
         </div>

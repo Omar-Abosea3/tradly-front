@@ -1,3 +1,6 @@
+#profileAsideNav {
+  padding: 48px 10px;
+}
 #profileAsideNav #profileLinksContainer {
   display: flex;
   justify-content: center;
@@ -9,6 +12,9 @@
   margin: 0px;
   box-shadow: 0px 0px 24px -12px rgba(0, 0, 0, 0.75);
 }
+#profileAsideNav #profileLinksContainer ul li .navProfileText {
+  display: none;
+}
 #profileAsideNav #profileLinksContainer ul li a, #profileAsideNav #profileLinksContainer ul li button {
   font-size: 12px !important;
 }
@@ -19,4 +25,31 @@
   border: 0px;
   background-color: unset;
   width: 100%;
+}
+
+@media screen and (max-width: 767.9px) {
+  #profileAsideNav {
+    padding: 24px 10px;
+  }
+  #profileAsideNav #profileLinksContainer {
+    height: auto;
+    padding: 10px 12px;
+  }
+  #profileAsideNav #profileLinksContainer ul {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #profileAsideNav #profileLinksContainer ul li {
+    margin-bottom: 0px !important;
+  }
+  #profileAsideNav #profileLinksContainer ul li .navProfileText {
+    display: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  #profileAsideNav #profileLinksContainer ul li a i, #profileAsideNav #profileLinksContainer ul li button i, #profileAsideNav #profileLinksContainer ul li i {
+    font-size: 1rem !important;
+  }
 }/*# sourceMappingURL=style.css.map */

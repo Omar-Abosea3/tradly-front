@@ -30,7 +30,8 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: whitesmoke;
+            background-color: #2a9a7e;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -113,6 +114,30 @@
                             background-color: black;
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:650px) {
+    #profileDataPage{
+        padding: 20px 10px;
+        .profileContent{
+            h3{
+                font-size: 1rem;
+            }
+            #editProfileBtn {
+                font-size: 1rem;
+            }
+            #editProfileLayer{
+                
+                #editProfileContent{
+                    width: 90%;
+                    background-color: white !important;
+                    border-radius: 12px;
+                    padding: 24px 18px;
+                  
                 }
             }
         }

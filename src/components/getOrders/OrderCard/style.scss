@@ -1,0 +1,67 @@
+.orderCard{
+    background-color: white;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.451);
+    padding: 15px 0px;
+    .orderProducts{
+        figure{
+            border-radius: 8px;
+            border: #288470 1px solid;
+            overflow: hidden;
+            padding: 2px;
+            img{
+                width: 50%;
+                object-fit: contain;
+                aspect-ratio: 2/2;
+                margin-bottom: 0px;
+            }
+            p{
+                font-size: 14px;
+                color: black;
+            }
+        }
+        
+    }
+    .orderDetails{
+        width: 100%;
+        h3{
+            font-size: 24px;
+            font-weight: 500;
+            color: black;
+        }
+        p{
+            font-size: 16px;
+            color: #288470;
+        }
+    }
+}
+
+@media screen and (max-width:650px) {
+    .orderCard{
+        .orderProducts{
+            figure{
+                border-radius: 6px;
+                img{
+                    width: 100%;
+                }
+                p{
+                    font-size: 10px;
+                }
+            }
+            
+        }
+        .orderDetails{
+            width: 100%;
+            h3{
+                font-size: 13px;
+                font-weight: 500;
+                color: black;
+            }
+            p{
+                font-size: 10px;
+                color: #288470;
+            }
+        }
+    }
+}

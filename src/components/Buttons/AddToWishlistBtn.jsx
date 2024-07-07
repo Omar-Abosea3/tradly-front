@@ -31,7 +31,7 @@ export default function AddToWishlistBtn(props) {
     async function removeFromWishlist(productId){
         $(`#addWishList${productId}`).removeClass('text-danger bi-heart-fill').addClass('bi-heart');
         if(page === 'wishlist'){
-            $(`#${productId}`).slideUp(2000);
+            $(`#product${productId}`).slideUp(2000);
             $('#imPortantLayer').removeClass('d-none');
         }
         try {

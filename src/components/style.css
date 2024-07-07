@@ -168,6 +168,41 @@
   color: #398378 !important;
 }
 
+/* HTML: <div class="loader"></div> */
+.redirecting {
+  width: -moz-fit-content;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 16px;
+  background: linear-gradient(90deg, #000 50%, rgba(0, 0, 0, 0) 0) right/200% 100%;
+  animation: l21 2s infinite linear;
+}
+.redirecting::before {
+  content: "Redirecting...";
+  color: rgba(0, 0, 0, 0);
+  padding: 0 5px;
+  background: inherit;
+  background-image: linear-gradient(90deg, #fff 50%, #000 0);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@keyframes l21 {
+  100% {
+    background-position: left;
+  }
+}
+
+.nav-Link:hover {
+  border: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+}
+
+.activeLink {
+  color: #2a9a7e !important;
+}
+
 .product {
   overflow: hidden;
   background-color: white;

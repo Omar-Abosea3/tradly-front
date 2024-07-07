@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Cookies from 'js-cookies';
+import emptyWishlist from '../assets/emptyWishlist.svg';
+import $ from 'jquery';
 
 export const getFavBrandData=createAsyncThunk('getfavbrands/getFavBrandData' , async function(){
     try {
         const { data } = await axios.get(`${process.env.REACT_APP_APIBASEURL}/wishlist/brands` ,{
             headers:{
-                bearertoken:Cookies.get('token'),
+                bearertoken:Cookies.getItem('token'),
             }
         });
-       if (data.message === "success") {
         console.log(data);
-        return true , data ;
-       }
+        return  data ;
       } catch (error) {
         return false ;
     }
@@ -30,9 +30,11 @@ const getFavBrandsSlice = createSlice({
             if(action.payload === false){
                 state.favBrands = null;
                 state.favBrandItems = 0;
+                $('#emptyBrandWishlist').html(`<div class="emptyWishlist pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptyWishlist}' alt="Empty Cart" /></div>`).addClass('vh-100'); 
             }else if( action.payload.wishlistBrands.length===0){
                 state.favBrandItems = 0;
                 state.favBrands = [];
+                $('#emptyBrandWishlist').html(`<div class="emptyWishlist pt-5 justify-content-center align-items-center"><img class='w-100' src='${emptyWishlist}' alt="Empty Cart" /></div>`).addClass('vh-100'); 
             }else{
                 state.favBrandItems = action.payload.wishlistBrands.length;
                 state.favBrands = action.payload.wishlistBrands;

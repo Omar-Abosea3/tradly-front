@@ -7,8 +7,8 @@ import Footer from '../Footer/Footer';
 
 export default function Layout({clearUserData,curUser , changeLanguage , setDirection }) {
   const location = useLocation();
-  const hideHeaderFooter = location.pathname === '/login' || location.pathname === '/signup';
-
+  const hideHeaderFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/generate-otp' || location.pathname === '/confirm-email' || location.pathname === '/forgetpassword' || location.pathname === '/resetpassword';
+  
   return <>
        {!hideHeaderFooter && <Navbar curUser={curUser} clearUserData={clearUserData} changeLanguage={changeLanguage}  setDirection={setDirection} />}
         <div style={{display:'none',zIndex:'9999',bottom:'2%'}} className="emptyCart text-center alert bg-dark start-0 end-0 mx-5 text-white position-fixed"><i className="bi bi-cart-x-fill"></i> Your Cart Is Empty.</div>

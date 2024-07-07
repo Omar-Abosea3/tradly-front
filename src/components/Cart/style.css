@@ -1,4 +1,4 @@
-#PaymentMethodsLayer {
+.PaymentMethodsLayer {
   position: fixed;
   top: 0px;
   right: 0px;
@@ -12,10 +12,16 @@
   overflow-y: auto;
   z-index: 999999;
 }
-#PaymentMethodsLayer #PaymentForm {
+.PaymentMethodsLayer .PaymentForm {
   background-color: white;
   width: 70%;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0px 0px 15px rgba(42, 182, 170, 0.662745098);
+}
+
+@media screen and (max-width: 650px) {
+  .PaymentMethodsLayer .PaymentForm {
+    width: 90%;
+  }
 }/*# sourceMappingURL=style.css.map */

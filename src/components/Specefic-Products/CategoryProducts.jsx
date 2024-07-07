@@ -91,8 +91,8 @@ export default function CategoryProducts() {
                     <Slider {...settings}>
                         {!SubCategories?supCatArr.map((item , index) => <div key={index} ><Placeholder.Graph active height={350} /></div>):SubCategories.map((item) => <div key={item._id} >
                             <Link to={`/subcategories/${item._id}`} className='text-decoration-none link-light'>
-                                <figure style={{ height: '300px' }} className='position-relative mb-0 overflow-hidden'>
-                                    <img style={{objectFit:'contain'}} src={item.image.secure_url} alt={item.name} loading='lazy' className='w-100 h-100' />
+                                <figure  className='position-relative mb-0 overflow-hidden'>
+                                    <img style={{objectFit:'contain' , aspectRatio:'4/4'}} src={item.image.secure_url} alt={item.name} loading='lazy' className='w-100 h-100' />
                                     <figcaption className='bg-dark bg-opacity-25 text-light position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center'>
                                         <h3>{item.slug}</h3>
                                     </figcaption>

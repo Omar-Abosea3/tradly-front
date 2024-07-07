@@ -1,12 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import LodingScrean from '../loadingScreen/LodingScrean';
-import AddToWishlistBtn from '../Buttons/AddToWishlistBtn';
-import { Link, useNavigate } from 'react-router-dom';
-import emptyWishlist from '../../assets/emptyWishlist.svg'
-import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
-import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
+import { useNavigate } from 'react-router-dom';
+import emptyWishlist from '../../assets/emptyWishlist.svg';
 import $ from 'jquery';
 import { Helmet } from 'react-helmet';
 import ProductCard from '../ProductCard/ProductCard';
@@ -17,18 +14,21 @@ export default function WishlistProducts() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const memo3 = useMemo(()=>{
-        const wishProductIds = [];
-        if(!wishListProducts){
-            dispatch(getFavProductsData());
-            setfavIds(wishProductIds);
-        }else{
-            wishListProducts.map(pro => wishProductIds.push(pro.id));
-            if(wishProductIds.length !== 0){
-                setfavIds(wishProductIds);
-            }
+    const memo3 = useMemo(() => {
+        if (!wishListProducts) {
+          dispatch(getFavProductsData());
+          return [];
         }
-    },[wishListProducts])
+      
+        const wishProductIds = wishListProducts.map(pro => pro.id);
+        return wishProductIds;
+      }, [wishListProducts]);
+      
+      useEffect(() => {
+        if (memo3.length !== 0) {
+          setfavIds(memo3);
+        }
+      }, [memo3]);
     const memo = useMemo(() => {
         if(!wishListProducts){
             dispatch(getFavProductsData());
@@ -40,7 +40,7 @@ export default function WishlistProducts() {
             <title>Wishlist</title>
         </Helmet>
         <div id='emptyWishlist' className='d-flex flex-wrap justify-content-center align-items-center'>
-        {!wishListProducts?<LodingScrean/>:<div className="container-fluid my-5 py-5">
+        {!wishListProducts?<LodingScrean/>:<div className="container-fluid ">
                 <div className="row mt-3 justify-content-center gy-4">
                     <h2><i className="bi bi-heart-fill text-danger fs-1"></i> WishList Products</h2>
                     <div style={{ display: 'none', zIndex: '9999', bottom:'2%' }} className="sucMsg p-3 mt-0 alert bg-black text-white position-fixed"><i className="fa-solid fa-circle-check"></i> Product Added Successfully .</div>

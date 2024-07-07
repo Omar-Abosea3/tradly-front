@@ -1,36 +1,37 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import $ from 'jquery';
 import { useFormik } from 'formik';
-import { Helmet } from 'react-helmet';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import StaticAuthComponent from '../StaticAuthComponent/StaticAuthComponent';
 import { Message, toaster } from 'rsuite';
-export default function ForgetPassword() {
+
+export default function GenerateOTP() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const user = {
-    OTP: '',
-    id:localStorage.getItem('userId')
+    email: '',
   };
 
-  const generateMyEmail = async (nUser) => {
+  const generateMyOTP = async (nUser) => {
     setLoading(true);
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_APIBASEURL}/auth/forgetpassword`, nUser);
+      const { data } = await axios.post(`${process.env.REACT_APP_APIBASEURL}/auth/generateotp`, nUser);
       setLoading(false);
       toaster.push(<Message closable showIcon type='success'>success !</Message> , {placement:'topCenter' , duration:'3000'});
-      localStorage.setItem('OTP',data.user.OTP);
+        
       setTimeout(() => {
-        navigate('/resetpassword');
+        navigate('/forgetpassword');
       }, 2000);
       console.log(data);
+      localStorage.setItem('userId',data.userId);
     } catch (error) {
       toaster.push(<Message closable showIcon type='error'>{error.response.data.message}</Message> , {placement:'topCenter' , duration:'3000'});
       console.log(error);
       setLoading(false);
-
+      
+      
     }
   };
 
@@ -38,12 +39,12 @@ export default function ForgetPassword() {
     initialValues: user,
     onSubmit: (values) => {
       console.log(values);
-      generateMyEmail(values);
+      generateMyOTP(values);
     },
     validate: (values) => {
       const errors = {};
-      if (!values.OTP) {
-        errors.OTP = 'OTP is required';
+      if (!values.email.includes('@') || !values.email.includes('.com')) {
+        errors.email = 'Email not valid';
       }
       return errors;
     },
@@ -52,29 +53,30 @@ export default function ForgetPassword() {
   return (
     <>
       <Helmet>
-        <title>Forget Password</title>
+        <title>Generate OTP</title>
       </Helmet>
       <div className='formContainer p-3 bg-white'>
         <div className="row">
-          <div className='col-lg-6 col-md-6 col-12 d-flex align-items-center vh-100 '>
+          <div className='col-lg-6 col-md-6 col-12 d-flex align-items-center vh-100'>
             <form className='px-3 col-12 ' onSubmit={myFormik.handleSubmit}>
               <div className="w-100 mb-3 d-flex justify-content-center">
                 <div id='circularLogo'>T</div>
               </div>
+              
 
-              <label className='mb-2' htmlFor="generateOTP2">OTP</label>
+              <label className='mb-2' htmlFor="generateOTPEmail">Email</label>
               <input
                 onBlur={myFormik.handleBlur}
                 onChange={myFormik.handleChange}
-                id='generateOTP2'
-                name='OTP'
-                placeholder='OTP'
-                value={myFormik.values.OTP}
+                id='generateOTPEmail'
+                name='email'
+                placeholder='Email'
+                value={myFormik.values.email}
                 className='form-control mb-3'
-                type="OTP"
+                type="email"
               />
-              {myFormik.errors.OTP && myFormik.touched.OTP ? (
-                <div className="alert py-1 alert-warning">{myFormik.errors.OTP}</div>
+              {myFormik.errors.email && myFormik.touched.email ? (
+                <div className="alert py-1 alert-warning">{myFormik.errors.email}</div>
               ) : null}
 
               <button id='subBtn' type='submit' className='btn loginBtn w-100'>

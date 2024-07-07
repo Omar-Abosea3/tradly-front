@@ -5,9 +5,10 @@ import Cookies from 'js-cookies';
 import { addToCartFunction } from '../../glopalFunctions/addToCartFun';
 import { getCartItemsData } from '../../Store/getLoggedCartItemsSlice';
 import { useDispatch } from 'react-redux';
-import { getFavProductsData } from '../../Store/getLoggedUserWishlist';
 import { useTranslation } from 'react-i18next';
 import { Message, toaster } from 'rsuite';
+import $ from 'jquery';
+import PaymentMethods from '../Cart/PaymentMethods';
 
 export default function ProductCard({pro , page , favIds}) {
     const navigate = useNavigate();
@@ -24,10 +25,16 @@ export default function ProductCard({pro , page , favIds}) {
             dispatch(getCartItemsData());
         }
     }
+
+    // const openPaymentLayer = () => {
+    //   $(`#PaymentMethodsLayer${pro._id}`).css('display' , 'flex');
+      
+    // }
  
   return (
     <>
-      <div className="product position-relative overflow-hidden">
+      {/* <PaymentMethods order={'one'} productId={pro._id}/> */}
+      <div id={`product${pro._id}`} className="product position-relative overflow-hidden">
         <Link
           to={`/product-detailes/${pro._id}`}
           className="text-decoration-none shadow-lg text-white"
@@ -93,16 +100,14 @@ export default function ProductCard({pro , page , favIds}) {
                 >
                 <i className="fa fa-cart-plus"></i> Cart
             </button>
-            <button
-                onClick={function () {
-                    addingToCart(pro._id);
-                }}
+            {/* <button
+                onClick={openPaymentLayer}
                 id={`orderBtn${pro._id}`}
                 title="Order Now"
                 className="orderPtn w-100"
                 >
                <i className="bi bi-credit-card-fill"></i> Order 
-            </button>
+            </button> */}
         </div>
         {pro.priceAfterDiscount !== pro.price ? (
           <div className="position-absolute sale me-3 text-center rounded-2">Sale</div>

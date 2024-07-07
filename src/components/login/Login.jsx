@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import Cookies from 'js-cookies';
 import StaticAuthComponent from '../StaticAuthComponent/StaticAuthComponent';
+import { Message, toaster } from 'rsuite';
 
 export default function Login({ getUserData }) {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function Login({ getUserData }) {
           $('.errMsg').fadeOut(500);
         }, 2000);
       })
+      toaster.push(<Message closable showIcon type='error'>{error.response.data.message}</Message> , {placement:'topCenter' , duration:'3000'});
     }
   }
   const myFormik = useFormik({
@@ -56,7 +58,7 @@ export default function Login({ getUserData }) {
     },
     validate: function (values) {
       let errors = {};
-      if (values.email.includes('@') == false || values.email.includes('.com') == false) {
+      if (values.email.includes('@') === false || values.email.includes('.com') === false) {
         errors.email = 'email not valid';
       }
       if (!values.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/)) {
@@ -77,7 +79,6 @@ export default function Login({ getUserData }) {
           <div className="w-100 mb-3 d-flex justify-content-center">
             <div id='circularLogo'>T</div>
           </div>
-          <div style={{ display: 'none' }} className="errMsg mb-3 text-center alert alert-danger py-1">Email or Password is not correct.</div>
           <div className="w-100">
           <label className='mb-2' htmlFor="email">email</label>
           <input onBlur={myFormik.handleBlur} onChange={myFormik.handleChange} id='email' placeholder='Email' value={myFormik.values.email} className='form-control mb-3' type="email" />
@@ -91,7 +92,7 @@ export default function Login({ getUserData }) {
           <button type='submit' className='btn loginBtn w-100 mt-4'>Login</button>
           <hr/>
           <h6 className='text-center'>Not a member yet? <Link className="text-decoration-none text-success" to={"/signup"}>Create Account</Link></h6>
-          <h6 className='text-center'>or rou are? <Link className="text-decoration-none text-success" to={"/forgetpassword"}>forget password</Link></h6>
+          <h6 className='text-center'>or rou are? <Link className="text-decoration-none text-success" to={"/generate-otp"}>forget password</Link></h6>
           <h6 className='text-center'>Go To <Link className="text-decoration-none text-success" to={"/"}>Home</Link></h6>
 
           <div className="col-12 d-flex justify-content-center align-items-center">
