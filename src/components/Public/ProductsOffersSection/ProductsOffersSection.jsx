@@ -81,6 +81,7 @@ export default function ProductsOffersSection() {
                           {pro.priceAfterDiscount}
                         </span>
                       </p>
+                      <p>{pro._id}</p>
                       <div className="w-100">
                         <Link
                           to={`/product-detailes/${pro._id}`} 
