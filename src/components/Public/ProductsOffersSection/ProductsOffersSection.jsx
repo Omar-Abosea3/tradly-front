@@ -56,6 +56,8 @@ export default function ProductsOffersSection() {
                   key={index}
                   className="product product2 position-relative overflow-hidden"
                 >
+                {console.log(pro._id)}
+
                   <figure
                     style={{ height: "80vh" }}
                     className="overflow-hidden position-relative mb-0"
