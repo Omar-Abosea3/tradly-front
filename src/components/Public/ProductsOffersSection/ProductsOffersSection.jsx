@@ -81,7 +81,8 @@ export default function ProductsOffersSection() {
                       </p>
                       <div className="w-100">
                         <Link
-                          to={`/product-detailes/${pro._id}`}
+                          to={`/product-detailes/${pro._id}`} 
+                          title={pro._id}
                           className="text-decoration-none"
                         >
                           <button
