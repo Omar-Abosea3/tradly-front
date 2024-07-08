@@ -74,8 +74,8 @@ export default function ProductDetailes() {
             <Helmet>
                 <title>{Specproduct.slug}</title>
             </Helmet>
-            <div className="container mt-5 productFontSize2 py-5">
-                <div className="row mt-3 justify-content-center align-items-start py-5 gy-5">
+            <div className="container productFontSize2">
+                <div className="row mt-4 justify-content-center align-items-start gy-5">
                     <div style={{ display: 'none', zIndex: '9999' , bottom:'2%' }} className="sucMsg p-3 mt-0 alert bg-black text-white position-fixed"><i className="fa-solid fa-circle-check"></i> Product Added Successfully .</div>
                     <div className="col-12 col-sm-12 col-md-12 col-lg-4">
                         <Slider className='p-2 '  {...settings}>
