@@ -52,11 +52,9 @@ export default function ProductDetailes() {
         }
     }
 
-    const memo = useMemo(()=>{
-        if(!Specproduct){
-            getSpecProduct();
-        }
-    },[Specproduct])
+   useEffect(()=> {
+    getSpecProduct();
+   },[])
 
     const memo2 = useMemo(()=>{
         const wishProductIds = [];

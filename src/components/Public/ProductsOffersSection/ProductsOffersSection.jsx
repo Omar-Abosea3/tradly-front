@@ -38,7 +38,7 @@ export default function ProductsOffersSection() {
   }, []);
   return (
     <>
-      <div className="row mt-3 mb-4 justify-content-center">
+      <div className="row mb-4 justify-content-center">
         {!allProducts ? (
           <div className="px-3">
             <Placeholder.Graph
