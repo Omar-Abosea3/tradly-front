@@ -46,7 +46,7 @@ export default function ProductDetailes() {
             let {data} = await axios.get(`${process.env.REACT_APP_APIBASEURL}/products/product/${id}`);
             dispatch(getFavProductsData());
             setSpecProduct(data.product);
-            console.log(Specproduct);
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -63,7 +63,7 @@ export default function ProductDetailes() {
             setfavIds(wishProductIds);
         }else{
             wishlistProducts.map(pro => wishProductIds.push(pro.id));
-            if(wishProductIds.length != 0){
+            if(wishProductIds.length !== 0){
                 setfavIds(wishProductIds);
             }
         }
