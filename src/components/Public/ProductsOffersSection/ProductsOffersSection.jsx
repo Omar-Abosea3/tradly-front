@@ -51,7 +51,7 @@ export default function ProductsOffersSection() {
         ) : (
           <Slider {...settings2}>
             {allProducts.map((pro, index) =>
-              pro.priceAfterDiscount !== pro.price ? (
+              pro.appliedDiscount !== 0 ? (
                 <div
                   key={index}
                   className="product product2 position-relative overflow-hidden"
