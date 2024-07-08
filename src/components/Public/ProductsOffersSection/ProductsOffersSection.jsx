@@ -1,13 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Placeholder } from "rsuite";
 
 export default function ProductsOffersSection() {
   const [allProducts, setallProducts] = useState(null);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const navigateToProductPage = (id) => {
+    navigate(`/product-detailes/${id}`);
+  }
   const settings2 = {
     dots: false,
     infinite: true,
@@ -56,7 +61,6 @@ export default function ProductsOffersSection() {
                   key={index}
                   className="product product2 position-relative overflow-hidden"
                 >
-                {console.log(pro._id)}
 
                   <figure
                     style={{ height: "80vh" }}
@@ -81,22 +85,18 @@ export default function ProductsOffersSection() {
                           {pro.priceAfterDiscount}
                         </span>
                       </p>
-                      <p>{pro._id}</p>
                       <div className="w-100">
-                        <Link
-                          to={`/product-detailes/${pro._id}`} 
-                          title={pro._id}
-                          className="text-decoration-none"
-                        >
+                        
                           <button
                             className="btn btn-outline-light"
                             title="detailes"
+                            onClick={() => {navigateToProductPage(pro._id)}}
                           >
                             {" "}
                             {t("public.seaProductDetailes")}{" "}
                             <i className="fa fa-arrow-right"></i>
                           </button>
-                        </Link>
+                       
                       </div>
                     </figcaption>
                   </figure>
