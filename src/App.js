@@ -159,20 +159,20 @@ export default function App() {
   ])
 
   return <>
-      <Online>
+    
         <div>
           <RouterProvider router={router} />
         </div>
-      </Online>
+ 
 
-      <Offline>
+      {/* <Offline>
         <div className='vh-100 d-flex justify-content-center align-items-center'>
             <figure className='w-50 text-center'>
                <img className='w-50 mb-3' src={noNetwork} alt='offline' loading='lazy'/>
                <h3>your network is not stable</h3>
             </figure>  
         </div>
-      </Offline>
+      </Offline> */}
       
   </>
 }
